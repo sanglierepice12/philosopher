@@ -20,25 +20,31 @@
 # include <string.h>
 # include <stdbool.h>
 
-typedef struct s_philinfo
+# define DIE 1
+# define ALIVE 0
+
+typedef struct s_state
 {
-	bool	die;
-}	t_philinfo;
+	bool	is_die;
+	bool	fork;
+}	t_state;
 
 typedef struct s_philosopher
 {
-	t_philinfo	*philinfo;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	int		need_eat;
+	t_state		state;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	int			need_eat;
+	long		start_time;
 }	t_philosopher;
-
-/*----------INIT_ARGS----------*/
-void	ft_init_args(char **argv);
 
 /*----------UTILS----------*/
 long	set_time();
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
+void	ft_check_args(char **argv);
+
+/*----------INIT_ARGS----------*/
+void	ft_init_args(char **argv, t_philosopher *philosopher);
 
 #endif

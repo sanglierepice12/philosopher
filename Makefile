@@ -29,8 +29,9 @@ DEP_DIR = ./dep
 SRCS =	main.c 										\
 		/utils/time_utile.c							\
 		/utils/atoi.c								\
+		/utils/utilitory.c							\
 		/project/init_args.c						\
-		/project/init_philo.c
+		/project/init_philo.c						\
 
 # Objet files
 OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
