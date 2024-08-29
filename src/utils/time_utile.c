@@ -12,11 +12,12 @@
 
 #include "../../include/philosopher.h"
 
-void	set_time()
+long	set_time()
 {
-	struct timeval tv;
-	struct timezone tz;
+	struct	timeval tv;
+	struct	timezone tz;
+	long	time;
 
 	gettimeofday(&tv,&tz);
-	printf("%lu\n", tv.tv_sec * 1000 + tv.tv_usec / 10000);
+	return (time = tv.tv_sec * 1000 + tv.tv_usec / 10000);
 }

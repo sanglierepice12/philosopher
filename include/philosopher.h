@@ -16,33 +16,29 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <stdbool.h>
 
-typedef struct s_glob
+typedef struct s_philinfo
 {
+	bool	die;
+}	t_philinfo;
 
-}				t_glob;
+typedef struct s_philosopher
+{
+	t_philinfo	*philinfo;
+	long	time_to_die;
+	long	time_to_eat;
+	long	time_to_sleep;
+	int		need_eat;
+}	t_philosopher;
 
-/*----------PARSE----------*/
-
-/*----------LIB----------*/
+/*----------INIT_ARGS----------*/
+void	ft_init_args(char **argv);
 
 /*----------UTILS----------*/
-void	set_time();
-
-/*----------BUILT_INS_CALLS----------*/
-
-
-/*----------BUILT_INS----------*/
-
-
-/*----------EXECUTION----------*/
-
-
-/*----------SIGNALS----------*/
-
-
-/*----------FREE&&ALLOC----------*/
-
-/*----------LINKED_LIST----------*/
+long	set_time();
+int	ft_atoi(const char *str);
 
 #endif

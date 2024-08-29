@@ -12,26 +12,19 @@
 
 #include "../include/philosopher.h"
 
-int	main()
+int	main(int arc, char **argv)
 {
-/*
+	t_philosopher	philo;
 
-	long sec, final_sec = 0;
-	gettimeofday(&tv,&tz);
-	printf("tv = %lu\n", tv.tv_sec);
-	printf("tv = %lu\n", tv.tv_usec);
-
-	char c[456];
-	scanf("%s", c);
-
-	sec = tv.tv_sec;
-
-	gettimeofday(&tv,&tz);
-	printf("tv = %lu\n", tv.tv_sec);
-	printf("tv = %lu\n", tv.tv_usec);
-
-	final_sec = (tv.tv_sec - sec) * 1000 + tv.tv_usec / 10000;
-	printf("%lu\n", final_sec);*/
-	set_time();
+	if (arc < 5 || arc > 6)
+		return (printf("Wrong argument number\n"));
+	ft_init_args(argv);
+	//printf("%lu\n", );
 	return (0);
 }
+
+//
+// init les philo
+//->faire attendre les threads avec une var
+// init les thread
+// cree routine
