@@ -14,11 +14,12 @@
 
 int	main(int arc, char **argv)
 {
-	t_philosopher	philosopher[200];
+	t_philosopher	philosopher[PHILO_MAX];
 	if (arc < 5 || arc > 6)
 		return (printf("Wrong argument number\n"));
 	ft_check_args(argv);
 	ft_init_args(argv, philosopher);
+
 
 
 	//PRINT INFOS PHILO
@@ -32,11 +33,10 @@ int	main(int arc, char **argv)
 			printf("needeat = %d\n---\n", philosopher[i].need_eat);
 		printf("isdie = %d\n\n", philosopher[i].state.is_die);
 		printf("fork = %d\n\n", philosopher[i].state.fork);
+		printf("%stime = %lu%s",YELLOW, philosopher[i].start_time, RESET);
 		i++;
 	}
 	//
-
-
 	return (0);
 }
 

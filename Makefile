@@ -18,7 +18,7 @@ NC = \033[0m
 # Compiler and flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
-LDFLAGS = -lreadline
+LDFLAGS = -pthread
 
 # Source and objet directories
 SRC_DIR = ./src
@@ -30,7 +30,6 @@ SRCS =	main.c 										\
 		/utils/time_utile.c							\
 		/utils/atoi.c								\
 		/utils/utilitory.c							\
-		/project/init_args.c						\
 		/project/init_philo.c						\
 
 # Objet files
