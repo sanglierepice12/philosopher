@@ -25,7 +25,7 @@
 /****VARIABLES****/
 # define DIE 1
 # define ALIVE 0
-# define PHILO_MAX 20000
+# define PHILO_MAX 200
 
 /****COLORS*****/
 #define RESET   "\033[0m"
@@ -47,25 +47,27 @@
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
 /*******STRUCTURES*******/
-typedef struct s_state
-{
-	bool	is_die;
-	bool	fork;
-}	t_state;
 
-typedef struct s_philosopher
+typedef struct s_fork
 {
-	int				total_philo;
-	int				id;
-	t_state			state;
-	long			time_to_die;
-	long			time_to_eat;
-	long			time_to_sleep;
-	int				need_eat;
-	long			start_time;
 	pthread_mutex_t	fork;
+}	t_fork;
+
+typedef struct	s_philosopher
+{
+	int				id;
+	unsigned int	time_eaten;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
 	pthread_t		thread;
-}	t_philosopher;
+}	t_philo;
+
+typedef struct s_table
+{
+	int		count_philo;
+	t_philo	philo[PHILO_MAX];
+	t_fork	fork[PHILO_MAX];
+}	t_table;
 
 /************UTILS**********/
 long	set_time();
@@ -73,6 +75,11 @@ int		ft_atoi(const char *str);
 void	ft_check_args(char **argv);
 
 /************INIT_ARGS**********/
-void	ft_init_args(char **argv, t_philosopher *philosopher);
+void	ft_init_philo(char **argv, t_table *table);
+//void	ft_init_args(char **argv, t_philosopher *philosopher);
+
+/**EXIT**/
+void	ft_exiting(int h);
+void	ft_end_all(t_table *table);
 
 #endif

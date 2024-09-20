@@ -12,24 +12,83 @@
 
 #include "../../include/philosopher.h"
 
-void	*print_done()
+void	*ft_philo_road(void *data)
 {
-	printf("%sdone\n%s", RED, RESET);
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	pthread_mutex_lock(&philo->right_fork->fork);
+	pthread_mutex_lock(&philo->left_fork->fork);
+	printf("%scoucou\n%s", BLUE, RESET);
+	sleep(4);
+	pthread_mutex_unlock(&philo->right_fork->fork);
+	pthread_mutex_unlock(&philo->left_fork->fork);
 	return (NULL);
 }
 
-void	init_threads_philosophers(t_philosopher *philosopher)
+void	ft_init_threads(t_table *table)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	while (i < philosopher[i].total_philo)
+	while (i < table->count_philo)
 	{
-		pthread_create(&philosopher[i].thread, NULL, print_done, &philosopher[i]);
+		if (pthread_create(&table->philo[i].thread, NULL, ft_philo_road, &table->philo[i]))
+			ft_exiting(1);
 		i++;
 	}
 }
 
+void	ft_init_philo(char **argv, t_table *table)
+{
+	int		i;
+
+	table->count_philo = ft_atoi(argv[1]);
+	i = 0;
+	while (i < table->count_philo)
+	{
+		if (pthread_mutex_init(&table->fork[i].fork, NULL))
+			ft_exiting(2);
+		i++;
+	}
+	i = 0;
+	while (i < table->count_philo)
+	{
+		table->philo[i].id = i;
+		table->philo[i].time_eaten = 0;
+		table->philo[i].left_fork = &table->fork[i];
+		table->philo[i].right_fork = &table->fork[(i + 1) % table->count_philo];
+		i++;
+	}
+	ft_init_threads(table);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 void	ft_init_args(char **argv, t_philosopher *philosopher)
 {
 	int		i;
@@ -51,4 +110,4 @@ void	ft_init_args(char **argv, t_philosopher *philosopher)
 			exit(EXIT_FAILURE);
 		i++;
 	}
-}
+}*/
