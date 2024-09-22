@@ -29,6 +29,7 @@ DEP_DIR = ./dep
 SRCS =	main.c 										\
 		/utils/time_utile.c							\
 		/utils/atoi.c								\
+		/utils/exit.c								\
 		/utils/utilitory.c							\
 		/project/init_philo.c						\
 		/project/threads.c						\

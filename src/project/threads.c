@@ -12,13 +12,6 @@
 
 #include "../../include/philosopher.h"
 
-void	ft_exiting(int h)
-{
-	printf ("%d\n", h);
-	perror("");
-	exit(EXIT_FAILURE);
-}
-
 void	ft_init_threads(t_table *table)
 {
 	int		i;
@@ -27,30 +20,36 @@ void	ft_init_threads(t_table *table)
 	while (i < table->count_philo)
 	{
 		if (pthread_create(&table->philo[i].thread, NULL, ft_philo_road, &table->philo[i]))
-			ft_exiting(1);
+			ft_exiting();
 		i++;
 	}
 }
 
-void	ft_end_all(t_table *table)
+void	ft_join_threads(t_table *table)
 {
-	int	i;
-	long	time;
+	int			i;
+	/*long		time_now;*/
 
 	ft_init_threads(table);
 	i = 0;
 	while (i < table->count_philo)
 	{
+		table->begin_time = set_time(table);
+	/*	time_now = set_time(table);*/
 		if (pthread_join(table->philo[i].thread, NULL))
-			ft_exiting(3);
+			ft_exiting();
+		/*if (time_now - table->philo[i].time_eaten > table->philo[i].time_to_eat)
+		{
+			printf("%sstop\ntime = %lu\n%s", GREEN, time_now - table->philo[i].time_eaten, RESET);
+			break ;
+		}*/
 		i++;
-		time = set_time();
-		printf("%stime = %lu\n%s", GREEN, time, RESET);
 	}
 	i = 0;
 	while (i < table->count_philo)
 	{
 		pthread_mutex_destroy(&table->fork[i].fork);
+		pthread_mutex_destroy(&table->philo[i].philo_var);
 		i++;
 	}
 }

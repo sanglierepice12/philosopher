@@ -35,22 +35,29 @@ typedef struct s_fork
 
 typedef struct	s_philosopher
 {
+	pthread_mutex_t	philo_var;
 	int				id;
-	unsigned int	time_eaten;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
+	long			time_eaten;
+	long			time_to_eat;
+	long			time_to_die;
 	pthread_t		thread;
+	struct s_table	*table;
 }	t_philo;
 
 typedef struct s_table
 {
 	int		count_philo;
+	int		is_dead;
+	long	begin_time;
 	t_philo	philo[PHILO_MAX];
 	t_fork	fork[PHILO_MAX];
 }	t_table;
 
 /**UTILS**/
-long	set_time();
+long	set_time(t_table *table);
+void	ft_usleep(t_philo *philo, long time);
 int		ft_atoi(const char *str);
 void	ft_check_args(char **argv);
 
@@ -62,8 +69,8 @@ void	ft_init_threads(t_table *table);
 void	*ft_philo_road(void *data);
 
 /**EXIT**/
-void	ft_exiting(int h);
-void	ft_end_all(t_table *table);
+void	ft_exiting();
+void	ft_join_threads(t_table *table);
 
 /**COLORS**/
 #define RESET   "\033[0m"
