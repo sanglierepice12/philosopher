@@ -29,8 +29,8 @@ void	*ft_philo_road(void *data)
 	}
 	pthread_mutex_lock(&philo->philo_var);
 	printf("%sje suis philo[%d]\n%s", BLUE, philo->id, RESET);
-	ft_usleep(philo, philo->time_to_eat);
-	philo->time_eaten = set_time(philo->table);
+	ft_usleep(philo, philo->table->time_to_eat);
+	philo->time_eaten = set_time();
 	pthread_mutex_unlock(&philo->philo_var);
 	pthread_mutex_unlock(&philo->right_fork->fork);
 	pthread_mutex_unlock(&philo->left_fork->fork);
@@ -43,6 +43,10 @@ void	ft_init_philo(char **argv, t_table *table)
 	int		i;
 
 	table->count_philo = ft_atoi(argv[1]);
+	table->time_to_die = ft_atoi(argv[2]);
+	table->time_to_eat = ft_atoi(argv[3]);
+	//sleep
+	//if (argv[5]) nomber of eat
 	table->begin_time = 0;
 	i = 0;
 	while (i < table->count_philo)
@@ -58,9 +62,8 @@ void	ft_init_philo(char **argv, t_table *table)
 	{
 		table->philo[i].table = table;
 		table->philo[i].id = i;
+		table->philo[i].alive = true;
 		table->philo[i].time_eaten = 0;
-		table->philo[i].time_to_eat = ft_atoi(argv[3]);
-		table->philo[i].time_to_die = ft_atoi(argv[2]);
 		table->philo[i].left_fork = &table->fork[i];
 		table->philo[i].right_fork = &table->fork[(i + 1) % table->count_philo];
 		i++;

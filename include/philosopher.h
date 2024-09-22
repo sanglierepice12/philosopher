@@ -37,27 +37,27 @@ typedef struct	s_philosopher
 {
 	pthread_mutex_t	philo_var;
 	int				id;
+	bool			alive;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	long			time_eaten;
-	long			time_to_eat;
-	long			time_to_die;
+	long long			time_eaten;
 	pthread_t		thread;
 	struct s_table	*table;
 }	t_philo;
 
 typedef struct s_table
 {
-	int		count_philo;
-	int		is_dead;
-	long	begin_time;
-	t_philo	philo[PHILO_MAX];
-	t_fork	fork[PHILO_MAX];
+	int			count_philo;
+	long long		begin_time;
+	long long		time_to_eat;
+	long long		time_to_die;
+	t_philo		philo[PHILO_MAX];
+	t_fork		fork[PHILO_MAX];
 }	t_table;
 
 /**UTILS**/
-long	set_time(t_table *table);
-void	ft_usleep(t_philo *philo, long time);
+long long	set_time();
+void	ft_usleep(t_philo *philo, long long time);
 int		ft_atoi(const char *str);
 void	ft_check_args(char **argv);
 

@@ -12,21 +12,25 @@
 
 #include "../../include/philosopher.h"
 
-long	set_time(t_table *table)
+long long	set_time()
 {
 	struct	timeval tv;
 	struct	timezone tz;
 
 	if (gettimeofday(&tv,&tz))
 		ft_exiting();
-	return (tv.tv_sec * 1000 + tv.tv_usec / 10000 - table->begin_time);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 10000);
 }
 
-void	ft_usleep(t_philo *philo, long time)
+void	ft_usleep(t_philo *philo, long long time)
 {
-	long	time_begin;
+	long long	begin;
 
-	time_begin = set_time(philo->table);
-	while (set_time(philo->table) - time_begin < time)
-		usleep(500);
+	begin = set_time();
+	while (philo->alive == true)
+	{
+		if (set_time() - begin >= time)
+			break ;
+		usleep(50);
+	}
 }

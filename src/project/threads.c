@@ -28,14 +28,14 @@ void	ft_init_threads(t_table *table)
 void	ft_join_threads(t_table *table)
 {
 	int			i;
-	/*long		time_now;*/
+	/*long long		time_now;*/
 
 	ft_init_threads(table);
 	i = 0;
 	while (i < table->count_philo)
 	{
-		table->begin_time = set_time(table);
-	/*	time_now = set_time(table);*/
+		table->begin_time = set_time();
+	/*	time_now = set_time();*/
 		if (pthread_join(table->philo[i].thread, NULL))
 			ft_exiting();
 		/*if (time_now - table->philo[i].time_eaten > table->philo[i].time_to_eat)
