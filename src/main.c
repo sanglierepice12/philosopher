@@ -20,6 +20,8 @@ int	main(int arc, char **argv)
 		return (printf("Wrong argument number\n"));
 	ft_check_args(argv);
 	ft_init_philo(argv, &table);
+	ft_init_threads(&table);
 	ft_join_threads(&table);
+	ft_destroy_mutex(&table);
 	return (0);
 }

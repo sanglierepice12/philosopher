@@ -25,7 +25,7 @@
 /**VARIABLES**/
 # define DIE 1
 # define ALIVE 0
-# define PHILO_MAX 20000
+# define PHILO_MAX 200
 
 /**STRUCTURES**/
 typedef struct s_fork
@@ -35,28 +35,33 @@ typedef struct s_fork
 
 typedef struct	s_philosopher
 {
-	pthread_mutex_t	philo_var;
 	int				id;
 	bool			alive;
+	long long		timer;
+	long long		time_eaten;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	long long			time_eaten;
+	pthread_mutex_t	philo_var;
 	pthread_t		thread;
 	struct s_table	*table;
 }	t_philo;
 
 typedef struct s_table
 {
-	int			count_philo;
-	long long		begin_time;
-	long long		time_to_eat;
+	bool			alive;
+	int				count_philo;
 	long long		time_to_die;
-	t_philo		philo[PHILO_MAX];
+	long long		time_to_eat;
+	long long		time_to_sleep;
+	int				max_eat;
+	long long		begin_time;
+	pthread_mutex_t	table_var;
 	t_fork		fork[PHILO_MAX];
+	t_philo		philo[PHILO_MAX];
 }	t_table;
 
 /**UTILS**/
-long long	set_time();
+long long	set_time(t_table *table);
 void	ft_usleep(t_philo *philo, long long time);
 int		ft_atoi(const char *str);
 void	ft_check_args(char **argv);
@@ -67,10 +72,15 @@ void	ft_init_philo(char **argv, t_table *table);
 /**THREADS**/
 void	ft_init_threads(t_table *table);
 void	*ft_philo_road(void *data);
+void	ft_join_threads(t_table *table);
+int		ft_eat(t_philo *philo);
+bool	ft_die(t_philo *philo);
 
 /**EXIT**/
-void	ft_exiting();
-void	ft_join_threads(t_table *table);
+void	ft_exiting(bool flag, t_table *table);
+void	ft_exit_msg(int code, char	*msg);
+void	ft_destroy_mutex(t_table *table);
+void	ft_unlock_one_all_mutex(t_philo *philo);
 
 /**COLORS**/
 #define RESET   "\033[0m"

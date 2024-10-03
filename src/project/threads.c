@@ -12,44 +12,30 @@
 
 #include "../../include/philosopher.h"
 
-void	ft_init_threads(t_table *table)
+void	ft_join_threads(t_table *table)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (i < table->count_philo)
 	{
-		if (pthread_create(&table->philo[i].thread, NULL, ft_philo_road, &table->philo[i]))
-			ft_exiting();
+		if (pthread_join(table->philo[i].thread, NULL))
+			ft_exiting(1, table);
 		i++;
 	}
 }
 
-void	ft_join_threads(t_table *table)
+void	ft_init_threads(t_table *table)
 {
-	int			i;
-	/*long long		time_now;*/
+	int		i;
 
-	ft_init_threads(table);
+	table->begin_time = set_time(table);
 	i = 0;
 	while (i < table->count_philo)
 	{
-		table->begin_time = set_time();
-	/*	time_now = set_time();*/
-		if (pthread_join(table->philo[i].thread, NULL))
-			ft_exiting();
-		/*if (time_now - table->philo[i].time_eaten > table->philo[i].time_to_eat)
-		{
-			printf("%sstop\ntime = %lu\n%s", GREEN, time_now - table->philo[i].time_eaten, RESET);
-			break ;
-		}*/
-		i++;
-	}
-	i = 0;
-	while (i < table->count_philo)
-	{
-		pthread_mutex_destroy(&table->fork[i].fork);
-		pthread_mutex_destroy(&table->philo[i].philo_var);
+		table->philo[i].time_eaten = table->begin_time;
+		if (pthread_create(&table->philo[i].thread, NULL, ft_philo_road, &table->philo[i]))
+			ft_exiting(1, table);
 		i++;
 	}
 }

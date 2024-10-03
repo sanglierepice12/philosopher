@@ -17,7 +17,7 @@ NC = \033[0m
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
 LDFLAGS = -pthread
 
 # Source and objet directories
@@ -32,7 +32,8 @@ SRCS =	main.c 										\
 		/utils/exit.c								\
 		/utils/utilitory.c							\
 		/project/init_philo.c						\
-		/project/threads.c						\
+		/project/threads.c							\
+		/project/road.c								\
 
 # Objet files
 OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
