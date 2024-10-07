@@ -12,16 +12,26 @@
 
 #include "../../include/philosopher.h"
 
+bool	ft_simulation_is_ended(t_philo *philo)
+{
+	bool	flag;
+
+	pthread_mutex_lock(&philo->table->table_mutex);
+	flag = !philo->table->simulation_on;
+	pthread_mutex_unlock(&philo->table->table_mutex);
+	return (flag);
+}
+
 void	ft_check_args(char **argv)
 {
 	if (!ft_atoi(argv[1]))
-		ft_exit_msg(1, "Wrong argument");
+		ft_exit_msg(1, "Invalid philosophers number\n");
 	if (!ft_atoi(argv[2]))
-		ft_exit_msg(1, "Wrong argument");
+		ft_exit_msg(1, "Invalid time to die\n");
 	if (!ft_atoi(argv[3]))
-		ft_exit_msg(1, "Wrong argument");
+		ft_exit_msg(1, "Invalid time to eat\n");
 	if (!ft_atoi(argv[4]))
-		ft_exit_msg(1, "Wrong argument");
+		ft_exit_msg(1, "Invalid time to sleep\n");
 	if (argv[5] && !ft_atoi(argv[5]))
-		ft_exit_msg(1, "Wrong argument");
+		ft_exit_msg(1, "Invalid number of times each philosopher must eat\n");
 }

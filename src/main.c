@@ -19,9 +19,11 @@ int	main(int arc, char **argv)
 	if (arc < 5 || arc > 6)
 		return (printf("Wrong argument number\n"));
 	ft_check_args(argv);
-	ft_init_philo(argv, &table);
+	ft_init_table(argv, &table);
+	ft_init_philo(&table);
 	ft_init_threads(&table);
 	ft_join_threads(&table);
 	ft_destroy_mutex(&table);
+	printf("%sEND OF THE SIMULATION%s", MAGENTA, RESET);
 	return (0);
 }

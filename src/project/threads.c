@@ -12,12 +12,44 @@
 
 #include "../../include/philosopher.h"
 
+void	*ft_philo_road(void *data)
+{
+	t_philo		*philo;
+	long long	time;
+
+	philo = (t_philo *)data;
+	pthread_mutex_lock(&philo->philo_mutex);
+	philo->last_meal_time = set_time();
+	pthread_mutex_unlock(&philo->philo_mutex);
+	while (philo->iAte != philo->table->max_meal)
+	{
+		if (ft_simulation_is_ended(philo) || ft_die(philo))
+			return (data);
+		if (!ft_eat(philo) || ft_simulation_is_ended(philo) || ft_die(philo))
+			return (data);
+		/*if (!ft_sleep(philo) || ft_simulation_is_ended(philo) || ft_die(philo))
+			return (data);*/
+		if (!ft_simulation_is_ended(philo))
+		{
+			pthread_mutex_lock(&philo->table->table_mutex);
+			time = set_time() - philo->table->start_simulation;
+			printf("%sPhilosopher %d is thinking at %lld ms%s\n",
+					GREEN, philo->id, time, RESET);
+			pthread_mutex_unlock(&philo->table->table_mutex);
+		}
+		if (ft_die(philo))
+			return (data);
+	}
+	printf("%sPhilo ate %d time\n%s", CYAN, philo->iAte, RESET);
+	return (data);
+}
+
 void	ft_join_threads(t_table *table)
 {
 	int			i;
 
 	i = 0;
-	while (i < table->count_philo)
+	while (i < table->numb_philo)
 	{
 		if (pthread_join(table->philo[i].thread, NULL))
 			ft_exiting(1, table);
@@ -29,11 +61,10 @@ void	ft_init_threads(t_table *table)
 {
 	int		i;
 
-	table->begin_time = set_time(table);
+	table->start_simulation = set_time();
 	i = 0;
-	while (i < table->count_philo)
+	while (i < table->numb_philo)
 	{
-		table->philo[i].time_eaten = table->begin_time;
 		if (pthread_create(&table->philo[i].thread, NULL, ft_philo_road, &table->philo[i]))
 			ft_exiting(1, table);
 		i++;

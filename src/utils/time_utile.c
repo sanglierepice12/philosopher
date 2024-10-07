@@ -12,37 +12,37 @@
 
 #include "../../include/philosopher.h"
 
-long long	set_time(t_table *table)
+long long	set_time()
 {
-	struct	timeval tv;
-	struct	timezone tz;
+	struct timeval	time;
 
-	if (gettimeofday(&tv,&tz))
-		ft_exiting(1, table);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+
 }
 
-void	ft_usleep(t_philo *philo, long long time)
+int	ft_usleep(long long milliseconds)
+{
+	long long	start;
+
+	start = set_time();
+	while ((set_time() - start) < milliseconds)
+		usleep(500);
+	return (0);
+}
+
+/*void	ft_usleep(t_philo *philo, long long time)
 {
 	long long	begin;
 
 	begin = set_time(philo->table);
-	//pthread_mutex_lock(&philo->table->table_var);
 	if (ft_die(philo))
 		return ;
-	/*if (set_time(philo->table) - philo->time_eaten > philo->table->time_to_die)
-	{
-		ft_die(philo);
-		*//*philo->table->alive = false;
-		printf("%sPhilosopher %d is dead at %lld ms%s\n", RED, philo->id, set_time(philo->table) - philo->table->begin_time, RESET);*//*
-		//pthread_mutex_unlock(&philo->table->table_var);
-		return ;//ft_exiting(1, philo->table);
-	}*/
-	//pthread_mutex_unlock(&philo->table->table_var);
 	while (philo->table->alive)
 	{
 		if (set_time(philo->table) - begin >= time)
 			break ;
 		usleep(50);
 	}
-}
+}*/

@@ -30,57 +30,59 @@
 /**STRUCTURES**/
 typedef struct s_fork
 {
-	pthread_mutex_t	fork;
+	pthread_mutex_t			fork;
 }	t_fork;
 
 typedef struct	s_philosopher
 {
-	int				id;
-	bool			alive;
-	long long		timer;
-	long long		time_eaten;
-	t_fork			*left_fork;
-	t_fork			*right_fork;
-	pthread_mutex_t	philo_var;
-	pthread_t		thread;
-	struct s_table	*table;
+	pthread_t				thread;
+	int						id;
+	int						iAte;
+	/*bool					alive;*/
+	long long				last_meal_time;
+	t_fork					*left_fork;
+	t_fork					*right_fork;
+	pthread_mutex_t			philo_mutex;
+	struct s_table			*table;
 }	t_philo;
 
 typedef struct s_table
 {
-	bool			alive;
-	int				count_philo;
-	long long		time_to_die;
-	long long		time_to_eat;
-	long long		time_to_sleep;
-	int				max_eat;
-	long long		begin_time;
-	pthread_mutex_t	table_var;
-	t_fork		fork[PHILO_MAX];
-	t_philo		philo[PHILO_MAX];
+	bool					simulation_on;
+	int						numb_philo;
+	long long				time_to_die;
+	long long				time_to_eat;
+	long long				time_to_sleep;
+	int						max_meal;
+	long long				start_simulation;
+	pthread_mutex_t			table_mutex;
+	t_fork					fork[PHILO_MAX];
+	t_philo					philo[PHILO_MAX];
 }	t_table;
 
 /**UTILS**/
-long long	set_time(t_table *table);
-void	ft_usleep(t_philo *philo, long long time);
-int		ft_atoi(const char *str);
-void	ft_check_args(char **argv);
+long long					set_time();
+int							ft_usleep(long long milliseconds);
+int							ft_atoi(const char *str);
+void						ft_check_args(char **argv);
+bool						ft_simulation_is_ended(t_philo *philo);
 
 /**INIT_ARGS**/
-void	ft_init_philo(char **argv, t_table *table);
+void						ft_init_table(char **argv, t_table *table);
+void						ft_init_philo(t_table *table);
 
 /**THREADS**/
-void	ft_init_threads(t_table *table);
-void	*ft_philo_road(void *data);
-void	ft_join_threads(t_table *table);
-int		ft_eat(t_philo *philo);
-bool	ft_die(t_philo *philo);
+void						ft_init_threads(t_table *table);
+void						*ft_philo_road(void *data);
+void						ft_join_threads(t_table *table);
+bool						ft_eat(t_philo *philo);
+bool						ft_die(t_philo *philo);
+bool						ft_sleep(t_philo *philo);
 
 /**EXIT**/
-void	ft_exiting(bool flag, t_table *table);
-void	ft_exit_msg(int code, char	*msg);
-void	ft_destroy_mutex(t_table *table);
-void	ft_unlock_one_all_mutex(t_philo *philo);
+void						ft_exiting(bool flag, t_table *table);
+void						ft_exit_msg(int code, char	*msg);
+void						ft_destroy_mutex(t_table *table);
 
 /**COLORS**/
 #define RESET   "\033[0m"
