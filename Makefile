@@ -40,7 +40,7 @@ OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(addprefix $(DEP_DIR)/, $(SRCS:.c=.d))
 
 # Executable Name
-NAME = philosopher
+NAME = philo
 
 # Target
 .SILENT: all clean fclean re

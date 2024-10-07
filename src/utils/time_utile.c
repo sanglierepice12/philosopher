@@ -28,7 +28,7 @@ int	ft_usleep(long long milliseconds)
 
 	start = set_time();
 	while ((set_time() - start) < milliseconds)
-		usleep(500);
+		usleep(50);
 	return (0);
 }
 

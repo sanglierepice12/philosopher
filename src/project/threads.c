@@ -27,20 +27,17 @@ void	*ft_philo_road(void *data)
 			return (data);
 		if (!ft_eat(philo) || ft_simulation_is_ended(philo) || ft_die(philo))
 			return (data);
-		/*if (!ft_sleep(philo) || ft_simulation_is_ended(philo) || ft_die(philo))
-			return (data);*/
+		if (!ft_sleep(philo) || ft_simulation_is_ended(philo) || ft_die(philo))
+			return (data);
 		if (!ft_simulation_is_ended(philo))
 		{
 			pthread_mutex_lock(&philo->table->table_mutex);
 			time = set_time() - philo->table->start_simulation;
-			printf("%sPhilosopher %d is thinking at %lld ms%s\n",
-					GREEN, philo->id, time, RESET);
+			printf("%s%lld philosopher %d is thinking%s\n",
+					GREEN, time, philo->id, RESET);
 			pthread_mutex_unlock(&philo->table->table_mutex);
 		}
-		if (ft_die(philo))
-			return (data);
 	}
-	printf("%sPhilo ate %d time\n%s", CYAN, philo->iAte, RESET);
 	return (data);
 }
 

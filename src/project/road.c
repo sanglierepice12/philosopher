@@ -25,7 +25,7 @@ bool	ft_die(t_philo *philo)
 		pthread_mutex_lock(&philo->table->table_mutex);
 		philo->table->simulation_on = false;
 		actual_time = actual_time - philo->table->start_simulation;
-		printf("%sPhilosopher %d is dead at %lld ms%s\n", RED, philo->id, actual_time, RESET);
+		printf("%s %lld philosopher %d died ms%s\n", RED, actual_time, philo->id, RESET);
 		pthread_mutex_unlock(&philo->table->table_mutex);
 		pthread_mutex_unlock(&philo->philo_mutex);
 		return (true);
@@ -46,13 +46,11 @@ bool	ft_sleep(t_philo *philo)
 		pthread_mutex_unlock(&philo->philo_mutex);
 		return (false);
 	}
-	printf("%sPhilosopher %d sleep at %lld ms%s\n", BLUE, philo->id, set_time() - philo->table->start_simulation, RESET);
+	printf("%s%lld philosopher %d is sleeping%s\n", BLUE, set_time() - philo->table->start_simulation, philo->id, RESET);
 	// Sleep
-	ft_usleep(philo->table->time_to_sleep);
-	//philo->last_meal_time = set_time();
-	//philo->last_meal_time += philo->table->time_to_sleep;
 	pthread_mutex_unlock(&philo->table->table_mutex);
 	pthread_mutex_unlock(&philo->philo_mutex);
+	ft_usleep(philo->table->time_to_sleep);
 	return (true);
 }
 
@@ -79,9 +77,9 @@ bool ft_eat(t_philo *philo)
 	}
 	// Eating
 	pthread_mutex_lock(&philo->philo_mutex);
-	printf("%sPhilosopher %d has taken a fork at %lld ms%s\n", YELLOW, philo->id, set_time() - philo->table->start_simulation, RESET);
+	printf("%s%lld philosopher %d has taken a fork%s\n", YELLOW, set_time() - philo->table->start_simulation, philo->id, RESET);
 	philo->last_meal_time = set_time(); // Set up at what time philo ate
-	printf("%sPhilosopher %d is eating%s\n", YELLOW, philo->id, RESET);
+	printf("%s%lld philosopher %d is eating%s\n", YELLOW, set_time() - philo->table->start_simulation, philo->id, RESET);
 	philo->iAte++;
 	pthread_mutex_unlock(&philo->philo_mutex);
 
