@@ -62,7 +62,9 @@ bool ft_eat(t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->left_fork->fork);
+		printf("%s%lld philosopher %d has taken a fork%s\n", YELLOW, set_time() - philo->table->start_simulation, philo->id, RESET);
 		pthread_mutex_lock(&philo->right_fork->fork);
+		printf("%s%lld philosopher %d has taken a fork%s\n", YELLOW, set_time() - philo->table->start_simulation, philo->id, RESET);
 	}
 	else
 	{
@@ -77,7 +79,6 @@ bool ft_eat(t_philo *philo)
 	}
 	// Eating
 	pthread_mutex_lock(&philo->philo_mutex);
-	printf("%s%lld philosopher %d has taken a fork%s\n", YELLOW, set_time() - philo->table->start_simulation, philo->id, RESET);
 	philo->last_meal_time = set_time(); // Set up at what time philo ate
 	printf("%s%lld philosopher %d is eating%s\n", YELLOW, set_time() - philo->table->start_simulation, philo->id, RESET);
 	philo->iAte++;
