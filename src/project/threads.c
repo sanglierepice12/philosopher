@@ -21,6 +21,11 @@ void	*ft_philo_road(void *data)
 	pthread_mutex_lock(&philo->philo_mutex);
 	philo->last_meal_time = set_time(philo->table);
 	pthread_mutex_unlock(&philo->philo_mutex);
+	if (philo->id % 2 != 0)
+	{
+		usleep(100);
+		ft_mutex_print(philo, THINK, set_time(philo->table) - philo->table->start_simulation);
+	}
 	while (philo->iAte != philo->table->max_meal)
 	{
 		if (ft_simulation_is_ended(philo) || ft_die(philo))
