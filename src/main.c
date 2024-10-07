@@ -22,6 +22,8 @@ int	main(int arc, char **argv)
 	ft_init_table(argv, &table);
 	ft_init_philo(&table);
 	ft_init_threads(&table);
+	while (ft_simulation_is_ended(table.philo))
+		ft_die(table.philo);
 	ft_join_threads(&table);
 	ft_destroy_mutex(&table);
 	printf("%sEND OF THE SIMULATION%s", MAGENTA, RESET);
