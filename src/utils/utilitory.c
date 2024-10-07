@@ -32,6 +32,12 @@ void	ft_check_args(char **argv)
 		ft_exit_msg(1, "Invalid time to eat\n");
 	if (!ft_atoi(argv[4]))
 		ft_exit_msg(1, "Invalid time to sleep\n");
-	if (argv[5] && !ft_atoi(argv[5]))
-		ft_exit_msg(1, "Invalid number of times each philosopher must eat\n");
+	if (argv[5])
+	{
+		if (!ft_atoi(argv[5]))
+			ft_exit_msg(1,
+						"Invalid number of times each philosopher must eat\n");
+		if (ft_atoi(argv[5]) > 200)
+			ft_exit_msg(1, "Invalid number of philo\n");
+	}
 }

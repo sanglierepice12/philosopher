@@ -12,6 +12,16 @@
 
 #include "../../include/philosopher.h"
 
+static void	ft_check_numbers(t_table *table)
+{
+	if (table->numb_philo < 1 ||
+		table->time_to_die < 1 ||
+		table->time_to_eat < 1 ||
+		table->time_to_sleep < 1 ||
+		table->max_meal < 1)
+		ft_exiting(1, table);
+}
+
 void	ft_init_table(char **argv, t_table *table)
 {
 	table->numb_philo = ft_atoi(argv[1]);
@@ -24,6 +34,7 @@ void	ft_init_table(char **argv, t_table *table)
 		table->max_meal = -1;
 	table->simulation_on = true;
 	table->start_simulation = 0;
+	ft_check_numbers(table);
 }
 
 static void	ft_init_mutex(t_table *table)
