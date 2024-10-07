@@ -25,7 +25,7 @@ bool	ft_die(t_philo *philo)
 		pthread_mutex_lock(&philo->table->table_mutex);
 		philo->table->simulation_on = false;
 		actual_time = actual_time - philo->table->start_simulation;
-		printf("%s %lld %d died%s\n", RED, actual_time, philo->id, RESET);
+		printf("%s%lld %d died%s\n", RED, actual_time, philo->id, RESET);
 		pthread_mutex_unlock(&philo->table->table_mutex);
 		pthread_mutex_unlock(&philo->philo_mutex);
 		return (true);
