@@ -68,7 +68,9 @@ bool ft_eat(t_philo *philo)
 	}
 	else
 	{
+		printf("%s%lld philosopher %d has taken a fork%s\n", YELLOW, set_time() - philo->table->start_simulation, philo->id, RESET);
 		pthread_mutex_lock(&philo->right_fork->fork);
+		printf("%s%lld philosopher %d has taken a fork%s\n", YELLOW, set_time() - philo->table->start_simulation, philo->id, RESET);
 		pthread_mutex_lock(&philo->left_fork->fork);
 	}
 	if (ft_simulation_is_ended(philo))
