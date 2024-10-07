@@ -75,6 +75,6 @@ void	ft_init_philo(t_table *table)
 	if (table->numb_philo == 1)
 	{
 		printf("%s0 0 has taken a fork%s\n", YELLOW, RESET);
-		ft_usleep(table->time_to_eat);
+		ft_usleep(table->time_to_eat, table);
 	}
 }

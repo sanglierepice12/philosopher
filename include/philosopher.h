@@ -55,14 +55,15 @@ typedef struct s_table
 	long long				time_to_sleep;
 	int						max_meal;
 	long long				start_simulation;
+	pthread_mutex_t			time;
 	pthread_mutex_t			table_mutex;
 	t_fork					fork[PHILO_MAX];
 	t_philo					philo[PHILO_MAX];
 }	t_table;
 
 /**UTILS**/
-long long					set_time();
-int							ft_usleep(long long milliseconds);
+long long					set_time(t_table *table);
+int							ft_usleep(long long milliseconds, t_table *table);
 int							ft_atoi(const char *str);
 void						ft_check_args(char **argv);
 bool						ft_simulation_is_ended(t_philo *philo);

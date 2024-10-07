@@ -19,7 +19,7 @@ void	*ft_philo_road(void *data)
 
 	philo = (t_philo *)data;
 	pthread_mutex_lock(&philo->philo_mutex);
-	philo->last_meal_time = set_time();
+	philo->last_meal_time = set_time(philo->table);
 	pthread_mutex_unlock(&philo->philo_mutex);
 	while (philo->iAte != philo->table->max_meal)
 	{
@@ -32,7 +32,7 @@ void	*ft_philo_road(void *data)
 		if (!ft_simulation_is_ended(philo))
 		{
 			pthread_mutex_lock(&philo->table->table_mutex);
-			time = set_time() - philo->table->start_simulation;
+			time = set_time(philo->table) - philo->table->start_simulation;
 			printf("%s%lld %d is thinking%s\n",
 					GREEN, time, philo->id, RESET);
 			pthread_mutex_unlock(&philo->table->table_mutex);
@@ -58,7 +58,7 @@ void	ft_init_threads(t_table *table)
 {
 	int		i;
 
-	table->start_simulation = set_time();
+	table->start_simulation = set_time(table);
 	i = 0;
 	while (i < table->numb_philo)
 	{
