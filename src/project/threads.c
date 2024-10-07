@@ -35,6 +35,7 @@ void	*ft_philo_road(void *data)
 			time = set_time(philo->table) - philo->table->start_simulation;
 			ft_mutex_print(philo, THINK, time);
 			pthread_mutex_unlock(&philo->table->table_mutex);
+			usleep(500);
 		}
 	}
 	return (data);
