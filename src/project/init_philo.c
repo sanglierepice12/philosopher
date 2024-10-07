@@ -15,6 +15,7 @@
 static void	ft_check_numbers(t_table *table)
 {
 	if (table->numb_philo < 1 ||
+		table->numb_philo > 200 ||
 		table->time_to_die < 1 ||
 		table->time_to_eat < 1 ||
 		table->time_to_sleep < 1 ||
