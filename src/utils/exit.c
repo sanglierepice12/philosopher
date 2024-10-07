@@ -30,7 +30,6 @@ void	ft_exiting(bool flag, t_table *table)
 {
 	if (flag)
 		ft_destroy_mutex(table);
-	perror("");
 	exit(EXIT_FAILURE);
 }
 

@@ -19,7 +19,7 @@ static void	ft_check_numbers(t_table *table)
 		table->time_to_eat < 1 ||
 		table->time_to_sleep < 1 ||
 		table->max_meal < 1)
-		ft_exiting(1, table);
+		ft_exiting(0, table);
 }
 
 void	ft_init_table(char **argv, t_table *table)
