@@ -12,16 +12,34 @@
 
 #include "../../include/philosopher.h"
 
+void	ft_mutex_print(t_philo *philo, E_STATUS STATUS, long long time)
+{
+	/*if (ft_simulation_is_ended(philo))
+		return ;*/
+	pthread_mutex_lock(&philo->print_mutex);
+	if (STATUS == FORK)
+		printf("%s%lld %d has taken a fork%s\n", YELLOW, time, philo->id, RESET);
+	if (STATUS == EAT)
+		printf("%s%lld %d is eating%s\n", YELLOW, time, philo->id, RESET);
+	if (STATUS == SLEEP)
+		printf("%s%lld %d is sleeping%s\n", BLUE, time, philo->id, RESET);
+	if (STATUS == THINK)
+		printf("%s%lld %d is thinking%s\n", GREEN, time, philo->id, RESET);
+	if (STATUS == DEAD)
+		printf("%s%lld %d died%s\n", RED, time, philo->id, RESET);
+	pthread_mutex_unlock(&philo->print_mutex);
+}
+
 long long	set_time(t_table *table)
 {
 	struct timeval	time;
 	long long		actual_time;
 
-	pthread_mutex_lock(&table->time);
+	pthread_mutex_lock(&table->time_mutex);
 	if (gettimeofday(&time, NULL) == -1)
 		write(2, "gettimeofday() error\n", 22);
 	actual_time = time.tv_sec * 1000 + time.tv_usec / 1000;
-	pthread_mutex_unlock(&table->time);
+	pthread_mutex_unlock(&table->time_mutex);
 	return (actual_time);
 
 }
@@ -35,18 +53,3 @@ int	ft_usleep(long long milliseconds, t_table *table)
 		usleep(50);
 	return (0);
 }
-
-/*void	ft_usleep(t_philo *philo, long long time)
-{
-	long long	begin;
-
-	begin = set_time(philo->table);
-	if (ft_die(philo))
-		return ;
-	while (philo->table->alive)
-	{
-		if (set_time(philo->table) - begin >= time)
-			break ;
-		usleep(50);
-	}
-}*/

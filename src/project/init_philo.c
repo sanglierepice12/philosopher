@@ -42,6 +42,8 @@ static void	ft_init_mutex(t_table *table)
 {
 	int		i;
 
+	if (pthread_mutex_init(&table->time_mutex, NULL))
+		ft_exiting(0, table);
 	if (pthread_mutex_init(&table->table_mutex, NULL))
 		ft_exiting(0, table);
 	i = 0;
@@ -50,6 +52,8 @@ static void	ft_init_mutex(t_table *table)
 		if (pthread_mutex_init(&table->fork[i].fork, NULL))
 			ft_exiting(0, table);
 		if (pthread_mutex_init(&table->philo[i].philo_mutex, NULL))
+			ft_exiting(0, table);
+		if (pthread_mutex_init(&table->philo[i].print_mutex, NULL))
 			ft_exiting(0, table);
 		i++;
 	}

@@ -27,6 +27,15 @@
 # define ALIVE 0
 # define PHILO_MAX 200
 
+typedef enum E_STATUS
+{
+	FORK,
+	EAT,
+	SLEEP,
+	DEAD,
+	THINK
+}	E_STATUS;
+
 /**STRUCTURES**/
 typedef struct s_fork
 {
@@ -43,6 +52,7 @@ typedef struct	s_philosopher
 	t_fork					*left_fork;
 	t_fork					*right_fork;
 	pthread_mutex_t			philo_mutex;
+	pthread_mutex_t			print_mutex;
 	struct s_table			*table;
 }	t_philo;
 
@@ -55,7 +65,7 @@ typedef struct s_table
 	long long				time_to_sleep;
 	int						max_meal;
 	long long				start_simulation;
-	pthread_mutex_t			time;
+	pthread_mutex_t			time_mutex;
 	pthread_mutex_t			table_mutex;
 	t_fork					fork[PHILO_MAX];
 	t_philo					philo[PHILO_MAX];
@@ -67,6 +77,7 @@ int							ft_usleep(long long milliseconds, t_table *table);
 int							ft_atoi(const char *str);
 void						ft_check_args(char **argv);
 bool						ft_simulation_is_ended(t_philo *philo);
+void			ft_mutex_print(t_philo *philo, E_STATUS STATUS, long long time);
 
 /**INIT_ARGS**/
 void						ft_init_table(char **argv, t_table *table);

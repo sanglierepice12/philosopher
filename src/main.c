@@ -23,7 +23,7 @@ int	main(int arc, char **argv)
 	ft_init_philo(&table);
 	ft_init_threads(&table);
 	int i = 0;
-	while (ft_simulation_is_ended(&table.philo[i]))
+	while (!ft_simulation_is_ended(&table.philo[i]))
 	{
 		ft_die(table.philo);
 		i++;

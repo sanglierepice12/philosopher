@@ -33,8 +33,7 @@ void	*ft_philo_road(void *data)
 		{
 			pthread_mutex_lock(&philo->table->table_mutex);
 			time = set_time(philo->table) - philo->table->start_simulation;
-			printf("%s%lld %d is thinking%s\n",
-					GREEN, time, philo->id, RESET);
+			ft_mutex_print(philo, THINK, time);
 			pthread_mutex_unlock(&philo->table->table_mutex);
 		}
 	}

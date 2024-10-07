@@ -22,10 +22,12 @@ bool	ft_die(t_philo *philo)
 	actual_time = set_time(philo->table);
 	if (actual_time - philo->last_meal_time > philo->table->time_to_die || philo->table->numb_philo == 1)
 	{
+		if (ft_simulation_is_ended(philo))
+			return (true);
 		pthread_mutex_lock(&philo->table->table_mutex);
 		philo->table->simulation_on = false;
 		actual_time = actual_time - philo->table->start_simulation;
-		printf("%s%lld %d died%s\n", RED, actual_time, philo->id, RESET);
+		ft_mutex_print(philo, DEAD, actual_time);
 		pthread_mutex_unlock(&philo->table->table_mutex);
 		pthread_mutex_unlock(&philo->philo_mutex);
 		return (true);
@@ -46,7 +48,8 @@ bool	ft_sleep(t_philo *philo)
 		pthread_mutex_unlock(&philo->philo_mutex);
 		return (false);
 	}
-	printf("%s%lld %d is sleeping%s\n", BLUE, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
+	ft_mutex_print(philo, SLEEP, set_time(philo->table) - philo->table->start_simulation);
+//	printf("%s%lld %d is sleeping%s\n", BLUE, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
 	// Sleep
 	pthread_mutex_unlock(&philo->table->table_mutex);
 	pthread_mutex_unlock(&philo->philo_mutex);
@@ -62,16 +65,20 @@ bool ft_eat(t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->left_fork->fork);
-		printf("%s%lld %d has taken a fork%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
+		ft_mutex_print(philo, FORK, set_time(philo->table) - philo->table->start_simulation);
+		//printf("%s%lld %d has taken a fork%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
 		pthread_mutex_lock(&philo->right_fork->fork);
-		printf("%s%lld %d has taken a fork%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
+		ft_mutex_print(philo, FORK, set_time(philo->table) - philo->table->start_simulation);
+	//	printf("%s%lld %d has taken a fork%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
 	}
 	else
 	{
-		printf("%s%lld %d has taken a fork%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
+		//printf("%s%lld %d has taken a fork%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
 		pthread_mutex_lock(&philo->right_fork->fork);
-		printf("%s%lld %d has taken a fork%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
+		ft_mutex_print(philo, FORK, set_time(philo->table) - philo->table->start_simulation);
+		//printf("%s%lld %d has taken a fork%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
 		pthread_mutex_lock(&philo->left_fork->fork);
+		ft_mutex_print(philo, FORK, set_time(philo->table) - philo->table->start_simulation);
 	}
 	if (ft_simulation_is_ended(philo))
 	{
@@ -82,7 +89,8 @@ bool ft_eat(t_philo *philo)
 	// Eating
 	pthread_mutex_lock(&philo->philo_mutex);
 	philo->last_meal_time = set_time(philo->table); // Set up at what time philo ate
-	printf("%s%lld %d is eating%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
+	ft_mutex_print(philo, EAT, set_time(philo->table) - philo->table->start_simulation);
+	//printf("%s%lld %d is eating%s\n", YELLOW, set_time(philo->table) - philo->table->start_simulation, philo->id, RESET);
 	philo->iAte++;
 	pthread_mutex_unlock(&philo->philo_mutex);
 
