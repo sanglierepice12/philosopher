@@ -25,13 +25,17 @@ int	main(int arc, char **argv)
 	int i = 0;
 	while (!ft_simulation_is_ended(&table.philo[i]) && table.philo->iAte != table.philo->table->max_meal)
 	{
+		//printf("END");
 		ft_die(&table.philo[i]);
 		i++;
 		if (i + 1 == table.numb_philo)
 			i = 0;
 	}
+	//printf("END");
 	ft_join_threads(&table);
+	//printf("END2222");
 	ft_destroy_mutex(&table);
+	printf("END3333");
 	printf("%sEND OF THE SIMULATION%s", MAGENTA, RESET);
 	return (0);
 }

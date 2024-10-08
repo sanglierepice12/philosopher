@@ -14,8 +14,6 @@
 
 void	ft_mutex_print(t_philo *philo, E_STATUS STATUS, long long time)
 {
-	/*if (ft_simulation_is_ended(philo))
-		return ;*/
 	pthread_mutex_lock(&philo->print_mutex);
 	if (STATUS == FORK)
 		printf("%s%lld %d has taken a fork%s\n", YELLOW, time, philo->id + 1, RESET);
@@ -50,6 +48,11 @@ int	ft_usleep(long long milliseconds, t_table *table)
 
 	start = set_time(table);
 	while ((set_time(table) - start) < milliseconds)
+	{
+
+		if (ft_simulation_is_ended(table->philo))
+			return (1);
 		usleep(50);
+	}
 	return (0);
 }

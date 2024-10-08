@@ -39,7 +39,8 @@ typedef enum E_STATUS
 /**STRUCTURES**/
 typedef struct s_fork
 {
-	pthread_mutex_t			fork;
+	int						id;
+	pthread_mutex_t			mutex;
 }	t_fork;
 
 typedef struct	s_philosopher
@@ -78,6 +79,8 @@ int							ft_atoi(const char *str);
 void						ft_check_args(char **argv);
 bool						ft_simulation_is_ended(t_philo *philo);
 void			ft_mutex_print(t_philo *philo, E_STATUS STATUS, long long time);
+bool						ft_l_fork_tester(t_philo *philo);
+bool						ft_r_fork_tester(t_philo *philo);
 
 /**INIT_ARGS**/
 void						ft_init_table(char **argv, t_table *table);

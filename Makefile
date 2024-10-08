@@ -31,9 +31,11 @@ SRCS =	main.c 										\
 		/utils/atoi.c								\
 		/utils/exit.c								\
 		/utils/utilitory.c							\
+		/utils/fork_utils.c							\
 		/project/init_philo.c						\
 		/project/threads.c							\
 		/project/road.c								\
+		/project/die.c								\
 
 # Objet files
 OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

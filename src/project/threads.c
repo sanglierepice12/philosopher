@@ -30,9 +30,9 @@ void	*ft_philo_road(void *data)
 	{
 		if (ft_simulation_is_ended(philo) || ft_die(philo))
 			return (data);
-		if (!ft_eat(philo) || ft_simulation_is_ended(philo) || ft_die(philo))
+		if (ft_simulation_is_ended(philo) || ft_die(philo) || !ft_eat(philo))
 			return (data);
-		if (!ft_sleep(philo) || ft_simulation_is_ended(philo) || ft_die(philo))
+		if (ft_simulation_is_ended(philo) || ft_die(philo) || !ft_sleep(philo))
 			return (data);
 		if (!ft_simulation_is_ended(philo))
 		{
