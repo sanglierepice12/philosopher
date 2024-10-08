@@ -18,14 +18,15 @@ bool	ft_l_fork_tester(t_philo *philo)
 	if (philo->left_fork->id == 0)
 	{
 		philo->left_fork->id = 1;
-		ft_mutex_print(philo, FORK, set_time(philo->table) - philo->table->start_simulation);
+		ft_mutex_print(philo, FORK, set_time(philo->table) - \
+			philo->table->start_simulation);
 	}
 	else
 	{
 		pthread_mutex_unlock(&philo->left_fork->mutex);
 		return (false);
 	}
-	//pthread_mutex_unlock(&philo->left_fork->mutex);
+	pthread_mutex_unlock(&philo->left_fork->mutex);
 	return (true);
 }
 
@@ -35,13 +36,14 @@ bool	ft_r_fork_tester(t_philo *philo)
 	if (philo->right_fork->id == 0)
 	{
 		philo->right_fork->id = 1;
-		ft_mutex_print(philo, FORK, set_time(philo->table) - philo->table->start_simulation);
+		ft_mutex_print(philo, FORK, set_time(philo->table) - \
+			philo->table->start_simulation);
 	}
 	else
 	{
 		pthread_mutex_unlock(&philo->right_fork->mutex);
 		return (false);
 	}
-	//pthread_mutex_unlock(&philo->right_fork->mutex);
+	pthread_mutex_unlock(&philo->right_fork->mutex);
 	return (true);
 }

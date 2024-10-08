@@ -24,63 +24,49 @@ bool	ft_sleep(t_philo *philo)
 		pthread_mutex_unlock(&philo->philo_mutex);
 		return (false);
 	}
-	ft_mutex_print(philo, SLEEP, set_time(philo->table) - philo->table->start_simulation);
+	ft_mutex_print(philo, SLEEP, set_time(philo->table) - \
+		philo->table->start_simulation);
 	pthread_mutex_unlock(&philo->table->table_mutex);
 	pthread_mutex_unlock(&philo->philo_mutex);
 	ft_usleep(philo->table->time_to_sleep, philo->table);
 	return (true);
 }
 
-bool ft_eat(t_philo *philo)
+void	ft_eat_follow(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->philo_mutex);
+	ft_mutex_print(philo, EAT, set_time(philo->table) - \
+		philo->table->start_simulation);
+	philo->i_ate++;
+	ft_usleep(philo->table->time_to_eat, philo->table);
+	philo->last_meal_time = set_time(philo->table);
+	pthread_mutex_unlock(&philo->philo_mutex);
+	pthread_mutex_lock(&philo->right_fork->mutex);
+	philo->right_fork->id = 0;
+	pthread_mutex_unlock(&philo->right_fork->mutex);
+	pthread_mutex_lock(&philo->left_fork->mutex);
+	philo->left_fork->id = 0;
+	pthread_mutex_unlock(&philo->left_fork->mutex);
+}
+
+bool	ft_eat(t_philo *philo)
 {
 	if (ft_simulation_is_ended(philo))
 		return (false);
-//	if (philo->id % 2 == 0)
-//	{
 	while (!ft_l_fork_tester(philo))
 	{
-		printf("b");
+		usleep(50);
 		if (ft_die(philo) || ft_simulation_is_ended(philo))
 			return (false);
 	}
 	while (!ft_r_fork_tester(philo))
 	{
-		printf("a");
+		usleep(50);
 		if (ft_die(philo) || ft_simulation_is_ended(philo))
-		{
 			return (false);
-		}
 	}
-//	}
-//	else
-//	{
-//		while (!ft_r_fork_tester(philo))
-//		{
-//			//printf("CCC");
-//			if (ft_die(philo) || ft_simulation_is_ended(philo))
-//				return (false);
-//		}
-//		/*while (!ft_l_fork_tester(philo))
-//		{
-//		//	printf("gggg");
-//			if (ft_die(philo) || ft_simulation_is_ended(philo))
-//				return (false);
-//		}*/
-//	}
 	if (ft_simulation_is_ended(philo))
-	{
-		pthread_mutex_unlock(&philo->left_fork->mutex);
-		pthread_mutex_unlock(&philo->right_fork->mutex);
 		return (false);
-	}
-	pthread_mutex_lock(&philo->philo_mutex);
-	philo->last_meal_time = set_time(philo->table); // Set up at what time philo ate
-	ft_mutex_print(philo, EAT, set_time(philo->table) - philo->table->start_simulation);
-	philo->iAte++;
-	pthread_mutex_unlock(&philo->philo_mutex);
-
-	ft_usleep(philo->table->time_to_eat, philo->table);
-	pthread_mutex_unlock(&philo->right_fork->mutex);
-	pthread_mutex_unlock(&philo->left_fork->mutex);
+	ft_eat_follow(philo);
 	return (true);
 }

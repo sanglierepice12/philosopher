@@ -36,6 +36,7 @@ SRCS =	main.c 										\
 		/project/threads.c							\
 		/project/road.c								\
 		/project/die.c								\
+		/project/print.c							\
 
 # Objet files
 OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

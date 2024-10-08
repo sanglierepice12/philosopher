@@ -16,8 +16,13 @@ bool	ft_simulation_is_ended(t_philo *philo)
 {
 	bool	flag;
 
+	flag = true;
 	pthread_mutex_lock(&philo->table->table_mutex);
-	flag = !philo->table->simulation_on;
+	if (philo->table->simulation_on)
+	{
+		pthread_mutex_unlock(&philo->table->table_mutex);
+		return (flag = false, flag);
+	}
 	pthread_mutex_unlock(&philo->table->table_mutex);
 	return (flag);
 }
@@ -36,7 +41,7 @@ void	ft_check_args(char **argv)
 	{
 		if (!ft_atoi(argv[5]))
 			ft_exit_msg(1,
-						"Invalid number of times each philosopher must eat\n");
+				"Invalid number of times each philosopher must eat\n");
 		if (ft_atoi(argv[5]) > 200)
 			ft_exit_msg(1, "Invalid number of philo\n");
 	}

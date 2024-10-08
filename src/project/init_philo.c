@@ -14,12 +14,12 @@
 
 static void	ft_check_numbers(t_table *table)
 {
-	if (table->numb_philo < 1 ||
-		table->numb_philo > 200 ||
-		table->time_to_die < 1 ||
-		table->time_to_eat < 1 ||
-		table->time_to_sleep < 1 ||
-		table->max_meal < -1)
+	if (table->numb_philo < 1
+		|| table->numb_philo > 200
+		|| table->time_to_die < 1
+		|| table->time_to_eat < 1
+		|| table->time_to_sleep < 1
+		|| table->max_meal < -1)
 		ft_exiting(0, table);
 }
 
@@ -42,6 +42,9 @@ static void	ft_init_mutex(t_table *table)
 {
 	int		i;
 
+	if (pthread_mutex_init(&table->start_mutex, NULL))
+		ft_exiting(0, table);
+	pthread_mutex_lock(&table->start_mutex);
 	if (pthread_mutex_init(&table->time_mutex, NULL))
 		ft_exiting(0, table);
 	if (pthread_mutex_init(&table->table_mutex, NULL))
@@ -57,6 +60,7 @@ static void	ft_init_mutex(t_table *table)
 			ft_exiting(0, table);
 		i++;
 	}
+	pthread_mutex_unlock(&table->start_mutex);
 }
 
 void	ft_init_philo(t_table *table)
@@ -69,7 +73,7 @@ void	ft_init_philo(t_table *table)
 	{
 		table->philo[i].table = table;
 		table->philo[i].id = i;
-		table->philo[i].iAte = 0;
+		table->philo[i].i_ate = 0;
 		table->philo[i].last_meal_time = 0;
 		table->philo[i].left_fork = &table->fork[i];
 		table->fork[i].id = 0;

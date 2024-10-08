@@ -12,27 +12,33 @@
 
 #include "../../include/philosopher.h"
 
+void	ft_philo_road_follow(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->start_mutex);
+	pthread_mutex_unlock(&philo->table->start_mutex);
+	pthread_mutex_lock(&philo->philo_mutex);
+	philo->last_meal_time = set_time(philo->table);
+	pthread_mutex_unlock(&philo->philo_mutex);
+	if (philo->id % 2 != 0)
+	{
+		ft_mutex_print(philo, THINK, set_time(philo->table) - \
+			philo->table->start_simulation);
+		ft_usleep(philo->table->time_to_sleep, philo->table);
+	}
+}
+
 void	*ft_philo_road(void *data)
 {
 	t_philo		*philo;
 	long long	time;
 
 	philo = (t_philo *)data;
-	pthread_mutex_lock(&philo->philo_mutex);
-	philo->last_meal_time = set_time(philo->table);
-	pthread_mutex_unlock(&philo->philo_mutex);
-	if (philo->id % 2 != 0)
+	ft_philo_road_follow(philo);
+	while (philo->i_ate != philo->table->max_meal)
 	{
-		usleep(100);
-		ft_mutex_print(philo, THINK, set_time(philo->table) - philo->table->start_simulation);
-	}
-	while (philo->iAte != philo->table->max_meal)
-	{
-		if (ft_simulation_is_ended(philo) || ft_die(philo))
+		if (ft_die(philo) || !ft_eat(philo))
 			return (data);
-		if (ft_simulation_is_ended(philo) || ft_die(philo) || !ft_eat(philo))
-			return (data);
-		if (ft_simulation_is_ended(philo) || ft_die(philo) || !ft_sleep(philo))
+		if (ft_die(philo) || !ft_sleep(philo))
 			return (data);
 		if (!ft_simulation_is_ended(philo))
 		{
@@ -40,7 +46,6 @@ void	*ft_philo_road(void *data)
 			time = set_time(philo->table) - philo->table->start_simulation;
 			ft_mutex_print(philo, THINK, time);
 			pthread_mutex_unlock(&philo->table->table_mutex);
-			usleep(500);
 		}
 	}
 	return (data);
@@ -67,7 +72,8 @@ void	ft_init_threads(t_table *table)
 	i = 0;
 	while (i < table->numb_philo)
 	{
-		if (pthread_create(&table->philo[i].thread, NULL, ft_philo_road, &table->philo[i]))
+		if (pthread_create(&table->philo[i].thread, NULL, \
+			ft_philo_road, &table->philo[i]))
 			ft_exiting(1, table);
 		i++;
 	}

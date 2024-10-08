@@ -17,7 +17,6 @@ void	ft_destroy_mutex(t_table *table)
 	int	i;
 
 	i = 0;
-
 	while (i < table->numb_philo)
 	{
 		pthread_mutex_destroy(&table->fork[i].mutex);
