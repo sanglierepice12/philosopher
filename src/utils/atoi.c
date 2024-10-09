@@ -43,5 +43,7 @@ int	ft_atoi(const char *str)
 		result = result * 10 + (str[i] - 48);
 		i++;
 	}
+	if (str[i])
+		return (0);
 	return (result * minus);
 }

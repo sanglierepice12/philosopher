@@ -28,8 +28,6 @@ int	main(int arc, char **argv)
 		table.philo->i_ate != table.philo->table->max_meal && \
 			table.numb_philo != 1)
 	{
-		if (table.philo->i_ate == table.philo->table->max_meal)
-			break ;
 		ft_die(&table.philo[i]);
 		if (table.philo->i_ate == table.philo->table->max_meal)
 			break ;

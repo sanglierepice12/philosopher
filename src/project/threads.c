@@ -18,13 +18,13 @@ void	ft_philo_road_follow(t_philo *philo)
 	philo->last_meal_time = set_time(philo->table);
 	pthread_mutex_lock(&philo->table->start_mutex);
 	pthread_mutex_unlock(&philo->table->start_mutex);
-	pthread_mutex_unlock(&philo->philo_mutex);
-	if (philo->id % 2 != 0)
+	if (philo->id % 2 == 0)
 	{
 		ft_mutex_print(philo, THINK, set_time(philo->table) - \
 			philo->table->start_simulation);
-		ft_usleep(philo->table->time_to_sleep, philo->table);
+		ft_usleep(philo->table->time_to_eat * 0.5f, philo->table);
 	}
+	pthread_mutex_unlock(&philo->philo_mutex);
 }
 
 void	*ft_philo_road(void *data)
@@ -34,7 +34,7 @@ void	*ft_philo_road(void *data)
 
 	philo = (t_philo *)data;
 	ft_philo_road_follow(philo);
-	while (philo->i_ate != philo->table->max_meal)
+	while (!ft_simulation_is_ended(philo) || philo->i_ate < philo->table->max_meal)
 	{
 		if (ft_die(philo) || !ft_eat(philo))
 			return (data);

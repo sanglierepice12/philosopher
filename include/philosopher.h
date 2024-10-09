@@ -47,7 +47,6 @@ typedef struct s_philosopher
 	t_fork					*left_fork;
 	t_fork					*right_fork;
 	pthread_mutex_t			philo_mutex;
-	pthread_mutex_t			print_mutex;
 	struct s_table			*table;
 }	t_philo;
 
@@ -60,6 +59,7 @@ typedef struct s_table
 	long long				time_to_sleep;
 	int						max_meal;
 	long long				start_simulation;
+	pthread_mutex_t			print_mutex;
 	pthread_mutex_t			start_mutex;
 	pthread_mutex_t			time_mutex;
 	pthread_mutex_t			table_mutex;

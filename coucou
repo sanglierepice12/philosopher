@@ -1,0 +1,141 @@
+[33m0 1 has taken a fork[0m
+[33m0 1 has taken a fork[0m
+[32m0 2 is thinking[0m
+[33m0 3 has taken a fork[0m
+[33m0 1 is eating[0m
+[33m0 3 has taken a fork[0m
+[33m0 3 is eating[0m
+[32m0 4 is thinking[0m
+[34m200 1 is sleeping[0m
+[34m200 3 is sleeping[0m
+[33m200 2 has taken a fork[0m
+[33m200 2 has taken a fork[0m
+[33m200 4 has taken a fork[0m
+[33m200 4 has taken a fork[0m
+[33m200 4 is eating[0m
+[33m200 2 is eating[0m
+[34m400 4 is sleeping[0m
+[32m400 3 is thinking[0m
+[34m400 2 is sleeping[0m
+[32m400 1 is thinking[0m
+[33m400 3 has taken a fork[0m
+[33m400 3 has taken a fork[0m
+[33m400 3 is eating[0m
+[33m400 1 has taken a fork[0m
+[33m400 1 has taken a fork[0m
+[33m400 1 is eating[0m
+[32m600 4 is thinking[0m
+[33m600 4 has taken a fork[0m
+[34m600 1 is sleeping[0m
+[33m600 4 has taken a fork[0m
+[32m600 2 is thinking[0m
+[34m600 3 is sleeping[0m
+[33m600 4 is eating[0m
+[33m600 2 has taken a fork[0m
+[33m600 2 has taken a fork[0m
+[33m600 2 is eating[0m
+[32m800 1 is thinking[0m
+[34m800 2 is sleeping[0m
+[34m800 4 is sleeping[0m
+[32m800 3 is thinking[0m
+[33m800 3 has taken a fork[0m
+[33m800 3 has taken a fork[0m
+[33m800 3 is eating[0m
+[33m800 1 has taken a fork[0m
+[33m800 1 has taken a fork[0m
+[33m800 1 is eating[0m
+[34m1000 3 is sleeping[0m
+[32m1000 4 is thinking[0m
+[33m1000 4 has taken a fork[0m
+[33m1000 4 has taken a fork[0m
+[33m1000 4 is eating[0m
+[34m1000 1 is sleeping[0m
+[32m1000 2 is thinking[0m
+[33m1000 2 has taken a fork[0m
+[33m1000 2 has taken a fork[0m
+[33m1000 2 is eating[0m
+[32m1200 1 is thinking[0m
+[32m1200 3 is thinking[0m
+[34m1200 2 is sleeping[0m
+[34m1200 4 is sleeping[0m
+[33m1201 3 has taken a fork[0m
+[33m1201 1 has taken a fork[0m
+[33m1201 1 has taken a fork[0m
+[33m1201 3 has taken a fork[0m
+[33m1201 1 is eating[0m
+[33m1201 3 is eating[0m
+[32m1400 4 is thinking[0m
+[32m1400 2 is thinking[0m
+[34m1401 3 is sleeping[0m
+[34m1401 1 is sleeping[0m
+[33m1402 4 has taken a fork[0m
+[33m1402 4 has taken a fork[0m
+[33m1402 4 is eating[0m
+[33m1402 2 has taken a fork[0m
+[33m1402 2 has taken a fork[0m
+[33m1402 2 is eating[0m
+[32m1601 1 is thinking[0m
+[32m1601 3 is thinking[0m
+[34m1602 4 is sleeping[0m
+[34m1602 2 is sleeping[0m
+[33m1602 3 has taken a fork[0m
+[33m1602 3 has taken a fork[0m
+[33m1602 3 is eating[0m
+[33m1603 1 has taken a fork[0m
+[33m1603 1 has taken a fork[0m
+[33m1603 1 is eating[0m
+[32m1802 2 is thinking[0m
+[32m1802 4 is thinking[0m
+[33m1802 4 has taken a fork[0m
+[34m1802 3 is sleeping[0m
+[34m1803 1 is sleeping[0m
+[33m1803 4 has taken a fork[0m
+[33m1803 4 is eating[0m
+[33m1803 2 has taken a fork[0m
+[33m1803 2 has taken a fork[0m
+[33m1803 2 is eating[0m
+[32m2002 3 is thinking[0m
+[34m2003 4 is sleeping[0m
+[34m2003 2 is sleeping[0m
+[32m2003 1 is thinking[0m
+[33m2003 1 has taken a fork[0m
+[33m2003 1 has taken a fork[0m
+[33m2003 1 is eating[0m
+[33m2004 3 has taken a fork[0m
+[33m2004 3 has taken a fork[0m
+[33m2004 3 is eating[0m
+[32m2203 4 is thinking[0m
+[34m2203 1 is sleeping[0m
+[32m2203 2 is thinking[0m
+[33m2203 2 has taken a fork[0m
+[34m2204 3 is sleeping[0m
+[33m2205 2 has taken a fork[0m
+[33m2205 2 is eating[0m
+[33m2205 4 has taken a fork[0m
+[33m2205 4 has taken a fork[0m
+[33m2205 4 is eating[0m
+[32m2403 1 is thinking[0m
+[32m2404 3 is thinking[0m
+[34m2405 2 is sleeping[0m
+[34m2405 4 is sleeping[0m
+[33m2406 1 has taken a fork[0m
+[33m2406 1 has taken a fork[0m
+[33m2406 1 is eating[0m
+[33m2406 3 has taken a fork[0m
+[33m2406 3 has taken a fork[0m
+[33m2406 3 is eating[0m
+[32m2605 4 is thinking[0m
+[32m2605 2 is thinking[0m
+[34m2606 1 is sleeping[0m
+[34m2606 3 is sleeping[0m
+[33m2607 2 has taken a fork[0m
+[33m2607 2 has taken a fork[0m
+[33m2607 2 is eating[0m
+[33m2607 4 has taken a fork[0m
+[33m2607 4 has taken a fork[0m
+[33m2607 4 is eating[0m
+[32m2806 3 is thinking[0m
+[32m2806 1 is thinking[0m
+[34m2807 4 is sleeping[0m
+[33m2807 1 has taken a fork[0m
+[33m2807

@@ -51,14 +51,14 @@ static void	ft_init_mutex(t_table *table)
 		ft_exiting(0, table);
 	if (pthread_mutex_init(&table->table_mutex, NULL))
 		ft_exiting(0, table);
+	if (pthread_mutex_init(&table->print_mutex, NULL))
+		ft_exiting(0, table);
 	i = 0;
 	while (i < table->numb_philo)
 	{
 		if (pthread_mutex_init(&table->fork[i].mutex, NULL))
 			ft_exiting(0, table);
 		if (pthread_mutex_init(&table->philo[i].philo_mutex, NULL))
-			ft_exiting(0, table);
-		if (pthread_mutex_init(&table->philo[i].print_mutex, NULL))
 			ft_exiting(0, table);
 		i++;
 	}
