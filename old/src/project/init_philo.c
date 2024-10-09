@@ -20,10 +20,7 @@ static void	ft_check_numbers(t_table *table)
 		|| table->time_to_eat < 1
 		|| table->time_to_sleep < 1
 		|| table->max_meal < -1)
-	{
-		printf("invalid input\n");
 		ft_exiting(0, table);
-	}
 }
 
 void	ft_init_table(char **argv, t_table *table)
@@ -47,6 +44,7 @@ static void	ft_init_mutex(t_table *table)
 
 	if (pthread_mutex_init(&table->start_mutex, NULL))
 		ft_exiting(0, table);
+	pthread_mutex_lock(&table->start_mutex);
 	if (pthread_mutex_init(&table->time_mutex, NULL))
 		ft_exiting(0, table);
 	if (pthread_mutex_init(&table->table_mutex, NULL))
@@ -62,6 +60,7 @@ static void	ft_init_mutex(t_table *table)
 			ft_exiting(0, table);
 		i++;
 	}
+	pthread_mutex_unlock(&table->start_mutex);
 }
 
 void	ft_init_philo(t_table *table)

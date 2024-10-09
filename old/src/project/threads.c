@@ -14,10 +14,10 @@
 
 void	ft_philo_road_follow(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->philo_mutex);
-	philo->last_meal_time = set_time(philo->table);
 	pthread_mutex_lock(&philo->table->start_mutex);
 	pthread_mutex_unlock(&philo->table->start_mutex);
+	pthread_mutex_lock(&philo->philo_mutex);
+	philo->last_meal_time = set_time(philo->table);
 	pthread_mutex_unlock(&philo->philo_mutex);
 	if (philo->id % 2 != 0)
 	{
@@ -53,7 +53,7 @@ void	*ft_philo_road(void *data)
 
 void	ft_join_threads(t_table *table)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (i < table->numb_philo)
@@ -68,7 +68,7 @@ void	ft_init_threads(t_table *table)
 {
 	int		i;
 
-	pthread_mutex_lock(&table->start_mutex);
+	table->start_simulation = set_time(table);
 	i = 0;
 	while (i < table->numb_philo)
 	{
@@ -77,7 +77,4 @@ void	ft_init_threads(t_table *table)
 			ft_exiting(1, table);
 		i++;
 	}
-	usleep(50);
-	table->start_simulation = set_time(table);
-	pthread_mutex_unlock(&table->start_mutex);
 }

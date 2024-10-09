@@ -42,5 +42,7 @@ void	ft_check_args(char **argv)
 		if (!ft_atoi(argv[5]))
 			ft_exit_msg(1,
 				"Invalid number of times each philosopher must eat\n");
+		if (ft_atoi(argv[5]) > 200)
+			ft_exit_msg(1, "Invalid number of philo\n");
 	}
 }

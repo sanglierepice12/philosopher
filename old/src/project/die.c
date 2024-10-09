@@ -37,30 +37,3 @@ bool	ft_die(t_philo *philo)
 	pthread_mutex_unlock(&philo->philo_mutex);
 	return (false);
 }
-
-/*
-void	ft_monitor_checker(t_table *table)
-{
-	int	i;
-
-	i = 0;
-	while (!ft_simulation_is_ended(&table->philo[i]) && \
-		*/
-/*table->philo->i_ate != table->philo->table->max_meal && \*//*
-
-			table->numb_philo != 1)
-	{
-		//pthread_mutex_lock(&table->philo[i].philo_mutex);
-		*/
-/*if (table->philo->i_ate == table->philo->table->max_meal)
-			break ;*//*
-
-		//pthread_mutex_unlock(&table->philo[i].philo_mutex);
-		ft_die(&table->philo[i]);
-		if (table->philo->i_ate == table->philo->table->max_meal)
-			break ;
-		i++;
-		if (i + 1 == table->numb_philo)
-			i = 0;
-	}
-}*/

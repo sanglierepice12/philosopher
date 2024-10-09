@@ -37,9 +37,9 @@ void	ft_eat_follow(t_philo *philo)
 	pthread_mutex_lock(&philo->philo_mutex);
 	ft_mutex_print(philo, EAT, set_time(philo->table) - \
 		philo->table->start_simulation);
+	philo->i_ate++;
 	ft_usleep(philo->table->time_to_eat, philo->table);
 	philo->last_meal_time = set_time(philo->table);
-	philo->i_ate++;
 	pthread_mutex_unlock(&philo->philo_mutex);
 	pthread_mutex_lock(&philo->right_fork->mutex);
 	philo->right_fork->id = 0;

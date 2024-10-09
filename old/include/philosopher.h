@@ -43,6 +43,7 @@ typedef struct s_philosopher
 	pthread_t				thread;
 	int						id;
 	int						i_ate;
+	/*bool					alive;*/
 	long long				last_meal_time;
 	t_fork					*left_fork;
 	t_fork					*right_fork;
@@ -89,7 +90,6 @@ void						ft_join_threads(t_table *table);
 bool						ft_eat(t_philo *philo);
 bool						ft_die(t_philo *philo);
 bool						ft_sleep(t_philo *philo);
-//void						ft_monitor_checker(t_table *table);
 
 /**EXIT**/
 void						ft_exiting(bool flag, t_table *table);
