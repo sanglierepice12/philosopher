@@ -12,55 +12,47 @@
 
 #include "../../include/philosopher.h"
 
-bool	ft_die(t_philo *philo)
-{
-	long long	actual_time;
+//todo add ms to timeval
 
-	pthread_mutex_lock(&philo->philo_mutex);
-	actual_time = set_time(philo->table);
-	if (actual_time - philo->last_meal_time > philo->table->time_to_die \
-		|| philo->table->numb_philo == 1)
+void	ft_add_ms_time_val(struct timeval *tv, long milliseconds)
+{
+	tv->tv_sec += milliseconds / 1000;
+	milliseconds %= 1000;
+	tv->tv_usec += milliseconds * 1000;
+	if (tv->tv_usec >= 1000000)
 	{
-		if (ft_simulation_is_ended(philo))
-		{
-			pthread_mutex_unlock(&philo->philo_mutex);
-			return (true);
-		}
-		pthread_mutex_lock(&philo->table->table_mutex);
-		actual_time = actual_time - philo->table->start_simulation;
-		ft_mutex_print(philo, DEAD, actual_time);
-		philo->table->simulation_on = false;
-		pthread_mutex_unlock(&philo->table->table_mutex);
-		pthread_mutex_unlock(&philo->philo_mutex);
-		return (true);
+		tv->tv_sec += tv->tv_usec / 1000000;
+		tv->tv_usec %= 1000000;
 	}
-	pthread_mutex_unlock(&philo->philo_mutex);
+}
+
+static bool	ft_compare_time_val(struct timeval tv1, struct timeval tv2)
+{
+	if (tv1.tv_sec > tv2.tv_sec)
+		return (true);
+	if (tv1.tv_sec < tv2.tv_sec)
+		return (false);
+	if (tv1.tv_usec / 1000  > tv2.tv_usec / 1000)
+		return (true);
+	if (tv1.tv_usec / 1000 < tv2.tv_usec / 1000)
+		return (false);
 	return (false);
 }
 
-/*
-void	ft_monitor_checker(t_table *table)
+void	ft_die(t_philo *philo)
 {
-	int	i;
+	long long	actual_time;
+	struct timeval tv_actual;
 
-	i = 0;
-	while (!ft_simulation_is_ended(&table->philo[i]) && \
-		*/
-/*table->philo->i_ate != table->philo->table->max_meal && \*//*
-
-			table->numb_philo != 1)
+	gettimeofday(&tv_actual, NULL);
+	if (ft_compare_time_val(tv_actual, philo->death_time))
 	{
-		//pthread_mutex_lock(&table->philo[i].philo_mutex);
-		*/
-/*if (table->philo->i_ate == table->philo->table->max_meal)
-			break ;*//*
-
-		//pthread_mutex_unlock(&table->philo[i].philo_mutex);
-		ft_die(&table->philo[i]);
-		if (table->philo->i_ate == table->philo->table->max_meal)
-			break ;
-		i++;
-		if (i + 1 == table->numb_philo)
-			i = 0;
+		if (ft_simulation_is_ended(philo->table))
+			return ;
+		actual_time = set_time(philo->table) - philo->table->start_simulation;
+		printf("%lld | %lld", (tv_actual.tv_sec * 1000 + tv_actual.tv_usec / 1000) - philo->table->start_simulation, (philo->death_time.tv_sec * 1000 + philo->death_time.tv_usec / 1000) - philo->table->start_simulation);
+		pthread_mutex_lock(&philo->table->table_mutex);
+		ft_mutex_print(philo, DEAD, actual_time);
+		pthread_mutex_unlock(&philo->table->table_mutex);
 	}
-}*/
+}

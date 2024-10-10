@@ -21,7 +21,7 @@ static void	ft_check_numbers(t_table *table)
 		|| table->time_to_sleep < 1
 		|| table->max_meal < -1)
 	{
-		printf("invalid input\n");
+		printf("invalid input");
 		ft_exiting(0, table);
 	}
 }
@@ -53,12 +53,12 @@ static void	ft_init_mutex(t_table *table)
 		ft_exiting(0, table);
 	if (pthread_mutex_init(&table->print_mutex, NULL))
 		ft_exiting(0, table);
+	if (pthread_mutex_init(&table->end_simulation_mutex, NULL))
+		ft_exiting(0, table);
 	i = 0;
 	while (i < table->numb_philo)
 	{
 		if (pthread_mutex_init(&table->fork[i].mutex, NULL))
-			ft_exiting(0, table);
-		if (pthread_mutex_init(&table->philo[i].philo_mutex, NULL))
 			ft_exiting(0, table);
 		i++;
 	}
@@ -82,9 +82,9 @@ void	ft_init_philo(t_table *table)
 		table->fork[i].id = 0;
 		i++;
 	}
-	if (table->numb_philo == 1)
+	/*if (table->numb_philo == 1)
 	{
 		printf("%s0 0 has taken a fork%s\n", YELLOW, RESET);
 		ft_usleep(table->time_to_eat, table);
-	}
+	}*/
 }

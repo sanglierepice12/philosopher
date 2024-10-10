@@ -12,41 +12,30 @@
 
 #include "../../include/philosopher.h"
 
-void	ft_philo_road_follow(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->philo_mutex);
-	philo->last_meal_time = set_time(philo->table);
-	pthread_mutex_lock(&philo->table->start_mutex);
-	pthread_mutex_unlock(&philo->table->start_mutex);
-	if (philo->id % 2 == 0)
-	{
-		ft_mutex_print(philo, THINK, set_time(philo->table) - \
-			philo->table->start_simulation);
-		ft_usleep(philo->table->time_to_eat * 0.5f, philo->table);
-	}
-	pthread_mutex_unlock(&philo->philo_mutex);
-}
-
 void	*ft_philo_road(void *data)
 {
 	t_philo		*philo;
 	long long	time;
 
 	philo = (t_philo *)data;
-	ft_philo_road_follow(philo);
-	while (!ft_simulation_is_ended(philo) || philo->i_ate < philo->table->max_meal)
+	philo->last_meal_time = set_time(philo->table);
+	gettimeofday(&philo->death_time, NULL);
+	ft_add_ms_time_val(&philo->death_time, philo->table->time_to_die);
+	pthread_mutex_lock(&philo->table->start_mutex);
+	pthread_mutex_unlock(&philo->table->start_mutex);
+	if (philo->id % 2 == 0 && philo->table->numb_philo != 1)
 	{
-		if (ft_die(philo) || !ft_eat(philo))
-			return (data);
-		if (ft_die(philo) || !ft_sleep(philo))
-			return (data);
-		if (!ft_simulation_is_ended(philo))
-		{
-			pthread_mutex_lock(&philo->table->table_mutex);
-			time = set_time(philo->table) - philo->table->start_simulation;
-			ft_mutex_print(philo, THINK, time);
-			pthread_mutex_unlock(&philo->table->table_mutex);
-		}
+		ft_mutex_print(philo, THINK, set_time(philo->table) - \
+			philo->table->start_simulation);
+		ft_usleep(philo->table->time_to_eat * 0.5f, philo->table);
+	}
+	while (!ft_simulation_is_ended(philo->table) /*|| philo->i_ate < philo->table->max_meal*/)
+	{
+		ft_eat(philo);
+		ft_sleep(philo);
+		time = set_time(philo->table) - philo->table->start_simulation;
+		ft_mutex_print(philo, THINK, time);
+		usleep(50);
 	}
 	return (data);
 }
@@ -72,6 +61,8 @@ void	ft_init_threads(t_table *table)
 	i = 0;
 	while (i < table->numb_philo)
 	{
+		gettimeofday(&table->philo[i].death_time, NULL);
+		ft_add_ms_time_val(&table->philo[i].death_time, (long)table->time_to_die);
 		if (pthread_create(&table->philo[i].thread, NULL, \
 			ft_philo_road, &table->philo[i]))
 			ft_exiting(1, table);

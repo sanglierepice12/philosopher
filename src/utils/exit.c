@@ -19,11 +19,11 @@ void	ft_destroy_mutex(t_table *table)
 	i = 0;
 	pthread_mutex_destroy(&table->start_mutex);
 	pthread_mutex_destroy(&table->time_mutex);
+	pthread_mutex_destroy(&table->print_mutex);
+	pthread_mutex_destroy(&table->end_simulation_mutex);
 	while (i < table->numb_philo)
 	{
 		pthread_mutex_destroy(&table->fork[i].mutex);
-		pthread_mutex_destroy(&table->philo[i].philo_mutex);
-		pthread_mutex_destroy(&table->print_mutex);
 		i++;
 	}
 	pthread_mutex_destroy(&table->table_mutex);

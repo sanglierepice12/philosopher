@@ -40,13 +40,13 @@ typedef struct s_fork
 
 typedef struct s_philosopher
 {
+	struct timeval			death_time;
 	pthread_t				thread;
 	int						id;
 	int						i_ate;
 	long long				last_meal_time;
 	t_fork					*left_fork;
 	t_fork					*right_fork;
-	pthread_mutex_t			philo_mutex;
 	struct s_table			*table;
 }	t_philo;
 
@@ -59,6 +59,7 @@ typedef struct s_table
 	long long				time_to_sleep;
 	int						max_meal;
 	long long				start_simulation;
+	pthread_mutex_t			end_simulation_mutex;
 	pthread_mutex_t			print_mutex;
 	pthread_mutex_t			start_mutex;
 	pthread_mutex_t			time_mutex;
@@ -72,11 +73,13 @@ long long					set_time(t_table *table);
 int							ft_usleep(long long milliseconds, t_table *table);
 int							ft_atoi(const char *str);
 void						ft_check_args(char **argv);
-bool						ft_simulation_is_ended(t_philo *philo);
+bool						ft_simulation_is_ended(t_table *table);
 void						ft_mutex_print(t_philo *philo, t_STATUS STATUS, \
 								long long time);
 bool						ft_l_fork_tester(t_philo *philo);
 bool						ft_r_fork_tester(t_philo *philo);
+void						ft_add_ms_time_val(struct timeval *tv, \
+								long milliseconds);
 
 /**INIT_ARGS**/
 void						ft_init_table(char **argv, t_table *table);
@@ -86,10 +89,9 @@ void						ft_init_philo(t_table *table);
 void						ft_init_threads(t_table *table);
 void						*ft_philo_road(void *data);
 void						ft_join_threads(t_table *table);
-bool						ft_eat(t_philo *philo);
-bool						ft_die(t_philo *philo);
-bool						ft_sleep(t_philo *philo);
-//void						ft_monitor_checker(t_table *table);
+void						ft_eat(t_philo *philo);
+void						ft_die(t_philo *philo);
+void						ft_sleep(t_philo *philo);
 
 /**EXIT**/
 void						ft_exiting(bool flag, t_table *table);

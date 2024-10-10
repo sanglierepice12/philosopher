@@ -12,64 +12,37 @@
 
 #include "../../include/philosopher.h"
 
-bool	ft_sleep(t_philo *philo)
+void	ft_sleep(t_philo *philo)
 {
-	if (ft_simulation_is_ended(philo))
-		return (false);
-	pthread_mutex_lock(&philo->table->table_mutex);
-	if (philo->table->simulation_on == false)
-	{
-		pthread_mutex_unlock(&philo->table->table_mutex);
-		return (false);
-	}
 	ft_mutex_print(philo, SLEEP, set_time(philo->table) - \
 		philo->table->start_simulation);
-	pthread_mutex_unlock(&philo->table->table_mutex);
-	if (ft_usleep(philo->table->time_to_sleep, philo->table))
-		return (false);
-	return (true);
+	ft_usleep(philo->table->time_to_sleep, philo->table);
 }
 
-bool	ft_eat_follow(t_philo *philo)
+void	ft_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->philo_mutex);
+	while (!ft_l_fork_tester(philo))
+		usleep(50);
+/*	if (philo->table->numb_philo == 1)
+	{
+		ft_usleep(philo->table->time_to_die, philo->table);
+		ft_die(philo);
+		if (ft_simulation_is_ended(philo->table))
+			return (false);
+	}*/
+	while (!ft_r_fork_tester(philo))
+		usleep(50);
+	gettimeofday(&philo->death_time, NULL);
+	ft_add_ms_time_val(&philo->death_time, philo->table->time_to_die);
+	philo->last_meal_time = philo->death_time.tv_usec;
 	ft_mutex_print(philo, EAT, set_time(philo->table) - \
 		philo->table->start_simulation);
-	philo->last_meal_time = set_time(philo->table);
-	pthread_mutex_unlock(&philo->philo_mutex);
-	if (ft_usleep(philo->table->time_to_eat, philo->table))
-		return (false);
-	/*pthread_mutex_lock(&philo->philo_mutex);
+	ft_usleep(philo->table->time_to_eat, philo->table);
 	philo->i_ate++;
-	pthread_mutex_unlock(&philo->philo_mutex);*/
 	pthread_mutex_lock(&philo->right_fork->mutex);
 	philo->right_fork->id = 0;
 	pthread_mutex_unlock(&philo->right_fork->mutex);
 	pthread_mutex_lock(&philo->left_fork->mutex);
 	philo->left_fork->id = 0;
 	pthread_mutex_unlock(&philo->left_fork->mutex);
-	return (true);
-}
-
-bool	ft_eat(t_philo *philo)
-{
-	if (ft_simulation_is_ended(philo))
-		return (false);
-	while (!ft_l_fork_tester(philo))
-	{
-		usleep(50);
-		/*if (ft_die(philo) || ft_simulation_is_ended(philo))
-			return (false);*/
-	}
-	while (!ft_r_fork_tester(philo))
-	{
-		usleep(50);
-		/*if (ft_die(philo) || ft_simulation_is_ended(philo))
-			return (false);*/
-	}
-	if (ft_simulation_is_ended(philo))
-		return (false);
-	if (!ft_eat_follow(philo))
-		return (false);
-	return (true);
 }
