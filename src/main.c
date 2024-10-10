@@ -26,6 +26,7 @@ int	main(int arc, char **argv)
 	i = 0;
 	while (!ft_simulation_is_ended(&table))
 	{
+		ft_die(&table.philo[i]);
 		if (table.philo[i].i_ate == table.philo->table->max_meal)
 		{
 			table.philo_ate_max++;
@@ -35,7 +36,6 @@ int	main(int arc, char **argv)
 			if (table.philo_ate_max == table.numb_philo)
 				table.simulation_on = false;
 		}
-		ft_die(&table.philo[i]);
 		if (i + 1 == table.numb_philo)
 			i = 0;
 		else

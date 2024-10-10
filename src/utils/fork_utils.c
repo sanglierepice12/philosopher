@@ -38,6 +38,11 @@ bool	ft_r_fork_tester(t_philo *philo)
 		pthread_mutex_unlock(&philo->right_fork->mutex);
 	}
 	else
+	{
+		usleep(5);
+		if (ft_simulation_is_ended(philo->table))
+			return (true);
 		return (false);
+	}
 	return (true);
 }

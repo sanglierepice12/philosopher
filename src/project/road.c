@@ -23,13 +23,6 @@ void	ft_eat(t_philo *philo)
 {
 	while (!ft_l_fork_tester(philo))
 		usleep(50);
-/*	if (philo->table->numb_philo == 1)
-	{
-		ft_usleep(philo->table->time_to_die, philo->table);
-		ft_die(philo);
-		if (ft_simulation_is_ended(philo->table))
-			return (false);
-	}*/
 	while (!ft_r_fork_tester(philo))
 		usleep(50);
 	gettimeofday(&philo->death_time, NULL);
