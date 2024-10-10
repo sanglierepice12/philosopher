@@ -12,24 +12,23 @@
 
 #include "../../include/philosopher.h"
 
-long long	set_time(t_table *table)
+long long	set_time(void)
 {
 	struct timeval	time;
 	long long		actual_time;
 
-	(void )table;
 	if (gettimeofday(&time, NULL) == -1)
 		write(2, "gettimeofday() error\n", 22);
 	actual_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (actual_time);
 }
 
-int	ft_usleep(long long milliseconds, t_table *table)
+int	ft_usleep(long long milliseconds)
 {
 	long long	start;
 
-	start = set_time(table);
-	while ((set_time(table) - start) < milliseconds)
+	start = set_time();
+	while ((set_time() - start) < milliseconds)
 		usleep(50);
 	return (0);
 }

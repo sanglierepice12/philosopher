@@ -14,9 +14,9 @@
 
 void	ft_sleep(t_philo *philo)
 {
-	ft_mutex_print(philo, SLEEP, set_time(philo->table) - \
+	ft_mutex_print(philo, SLEEP, set_time() - \
 		philo->table->start_simulation);
-	ft_usleep(philo->table->time_to_sleep, philo->table);
+	ft_usleep(philo->table->time_to_sleep);
 }
 
 void	ft_eat(t_philo *philo)
@@ -35,9 +35,9 @@ void	ft_eat(t_philo *philo)
 	gettimeofday(&philo->death_time, NULL);
 	ft_add_ms_time_val(&philo->death_time, philo->table->time_to_die);
 	philo->last_meal_time = philo->death_time.tv_usec;
-	ft_mutex_print(philo, EAT, set_time(philo->table) - \
+	ft_mutex_print(philo, EAT, set_time() - \
 		philo->table->start_simulation);
-	ft_usleep(philo->table->time_to_eat, philo->table);
+	ft_usleep(philo->table->time_to_eat);
 	philo->i_ate++;
 	pthread_mutex_lock(&philo->right_fork->mutex);
 	philo->right_fork->id = 0;

@@ -24,12 +24,17 @@ int	main(int arc, char **argv)
 	ft_init_philo(&table);
 	ft_init_threads(&table);
 	i = 0;
-	while (!ft_simulation_is_ended(&table) && \
-		table.philo[i].i_ate <= table.philo->table->max_meal/* && \*/
-		/*	table.numb_philo != 1*/)
+	while (!ft_simulation_is_ended(&table))
 	{
-		//if (table.philo[i].i_ate == table.philo->table->max_meal)
-		//	break ;
+		if (table.philo[i].i_ate == table.philo->table->max_meal)
+		{
+			table.philo_ate_max++;
+			printf("ate max = %d\n", table.philo_ate_max);
+			printf("max meal = %d\n", table.max_meal);
+			printf("max meal = %d\n", table.numb_philo);
+			if (table.philo_ate_max == table.numb_philo)
+				table.simulation_on = false;
+		}
 		ft_die(&table.philo[i]);
 		if (i + 1 == table.numb_philo)
 			i = 0;

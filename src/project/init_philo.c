@@ -38,6 +38,7 @@ void	ft_init_table(char **argv, t_table *table)
 		table->max_meal = -1;
 	table->simulation_on = true;
 	table->start_simulation = 0;
+	table->philo_ate_max = 0;
 	ft_check_numbers(table);
 }
 
@@ -82,9 +83,4 @@ void	ft_init_philo(t_table *table)
 		table->fork[i].id = 0;
 		i++;
 	}
-	/*if (table->numb_philo == 1)
-	{
-		printf("%s0 0 has taken a fork%s\n", YELLOW, RESET);
-		ft_usleep(table->time_to_eat, table);
-	}*/
 }

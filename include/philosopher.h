@@ -58,6 +58,7 @@ typedef struct s_table
 	long long				time_to_eat;
 	long long				time_to_sleep;
 	int						max_meal;
+	int						philo_ate_max;
 	long long				start_simulation;
 	pthread_mutex_t			end_simulation_mutex;
 	pthread_mutex_t			print_mutex;
@@ -69,8 +70,8 @@ typedef struct s_table
 }	t_table;
 
 /**UTILS**/
-long long					set_time(t_table *table);
-int							ft_usleep(long long milliseconds, t_table *table);
+long long					set_time(void);
+int							ft_usleep(long long milliseconds);
 int							ft_atoi(const char *str);
 void						ft_check_args(char **argv);
 bool						ft_simulation_is_ended(t_table *table);

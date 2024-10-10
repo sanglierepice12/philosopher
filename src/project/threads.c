@@ -18,22 +18,22 @@ void	*ft_philo_road(void *data)
 	long long	time;
 
 	philo = (t_philo *)data;
-	philo->last_meal_time = set_time(philo->table);
+	philo->last_meal_time = set_time();
 	gettimeofday(&philo->death_time, NULL);
 	ft_add_ms_time_val(&philo->death_time, philo->table->time_to_die);
 	pthread_mutex_lock(&philo->table->start_mutex);
 	pthread_mutex_unlock(&philo->table->start_mutex);
 	if (philo->id % 2 == 0 && philo->table->numb_philo != 1)
 	{
-		ft_mutex_print(philo, THINK, set_time(philo->table) - \
+		ft_mutex_print(philo, THINK, set_time() - \
 			philo->table->start_simulation);
-		ft_usleep(philo->table->time_to_eat * 0.5f, philo->table);
+		ft_usleep(philo->table->time_to_eat * 0.5f);
 	}
-	while (!ft_simulation_is_ended(philo->table) /*|| philo->i_ate < philo->table->max_meal*/)
+	while (!ft_simulation_is_ended(philo->table))
 	{
 		ft_eat(philo);
 		ft_sleep(philo);
-		time = set_time(philo->table) - philo->table->start_simulation;
+		time = set_time() - philo->table->start_simulation;
 		ft_mutex_print(philo, THINK, time);
 		usleep(50);
 	}
@@ -62,13 +62,14 @@ void	ft_init_threads(t_table *table)
 	while (i < table->numb_philo)
 	{
 		gettimeofday(&table->philo[i].death_time, NULL);
-		ft_add_ms_time_val(&table->philo[i].death_time, (long)table->time_to_die);
+		ft_add_ms_time_val(&table->philo[i].death_time, \
+			(long)table->time_to_die);
 		if (pthread_create(&table->philo[i].thread, NULL, \
 			ft_philo_road, &table->philo[i]))
 			ft_exiting(1, table);
 		i++;
 	}
 	usleep(50);
-	table->start_simulation = set_time(table);
+	table->start_simulation = set_time();
 	pthread_mutex_unlock(&table->start_mutex);
 }
