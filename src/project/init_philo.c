@@ -77,6 +77,7 @@ void	ft_init_philo(t_table *table)
 		table->philo[i].id = i;
 		table->philo[i].i_ate = 0;
 		table->philo[i].last_meal_time = 0;
+		table->philo[i].has_eaten_max = 0;
 		table->philo[i].left_fork = &table->fork[i];
 		table->fork[i].id = 0;
 		table->philo[i].right_fork = &table->fork[(i + 1) % table->numb_philo];

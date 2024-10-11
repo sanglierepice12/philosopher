@@ -27,19 +27,14 @@ int	main(int arc, char **argv)
 	while (!ft_simulation_is_ended(&table))
 	{
 		ft_die(&table.philo[i]);
-		if (table.philo[i].i_ate == table.philo->table->max_meal)
+		if (table.philo[i].i_ate == table.philo->table->max_meal && !table.philo[i].has_eaten_max)
 		{
+			table.philo[i].has_eaten_max = true;
 			table.philo_ate_max++;
-			printf("ate max = %d\n", table.philo_ate_max);
-			printf("max meal = %d\n", table.max_meal);
-			printf("max meal = %d\n", table.numb_philo);
 			if (table.philo_ate_max == table.numb_philo)
 				table.simulation_on = false;
 		}
-		if (i + 1 == table.numb_philo)
-			i = 0;
-		else
-			i++;
+		i = (i + 1) % table.numb_philo;
 	}
 	ft_join_threads(&table);
 	ft_destroy_mutex(&table);

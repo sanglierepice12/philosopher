@@ -44,6 +44,7 @@ typedef struct s_philosopher
 	pthread_t				thread;
 	int						id;
 	int						i_ate;
+	int						has_eaten_max;
 	long long				last_meal_time;
 	t_fork					*left_fork;
 	t_fork					*right_fork;
