@@ -52,12 +52,11 @@ void	ft_die(t_philo *philo)
 		if (ft_simulation_is_ended(philo->table))
 			return ;
 		actual_time = set_time() - philo->table->start_simulation;
-		printf("%lld | %lld", (tv_actual.tv_sec * 1000 + tv_actual.tv_usec / 1000) - philo->table->start_simulation, (philo->death_time.tv_sec * 1000 + philo->death_time.tv_usec / 1000) - philo->table->start_simulation);
+		//printf("%lld | %lld", (tv_actual.tv_sec * 1000 + tv_actual.tv_usec / 1000) - philo->table->start_simulation, (philo->death_time.tv_sec * 1000 + philo->death_time.tv_usec / 1000) - philo->table->start_simulation);
 		pthread_mutex_lock(&philo->table->table_mutex);
 		ft_mutex_print(philo, DEAD, actual_time);
 		pthread_mutex_unlock(&philo->table->table_mutex);
 	}
 	else
 		pthread_mutex_unlock(&philo->table->time_mutex);
-
 }

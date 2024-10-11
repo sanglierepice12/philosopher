@@ -19,6 +19,17 @@ void	ft_sleep(t_philo *philo)
 	ft_usleep(philo->table->time_to_sleep);
 }
 
+static void	ft_philo_is_full(t_philo *philo)
+{
+	if (philo->i_ate == philo->max_eat)
+	{
+		philo->has_eaten_max = true;
+		pthread_mutex_lock(&philo->table->eater_mutex);
+		philo->table->philo_ate_max++;
+		pthread_mutex_unlock(&philo->table->eater_mutex);
+	}
+}
+
 void	ft_eat(t_philo *philo)
 {
 	while (!ft_l_fork_tester(philo))
@@ -34,6 +45,7 @@ void	ft_eat(t_philo *philo)
 		philo->table->start_simulation);
 	ft_usleep(philo->table->time_to_eat);
 	philo->i_ate++;
+	ft_philo_is_full(philo);
 	pthread_mutex_lock(&philo->right_fork->mutex);
 	philo->right_fork->id = 0;
 	pthread_mutex_unlock(&philo->right_fork->mutex);

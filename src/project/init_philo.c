@@ -56,6 +56,8 @@ static void	ft_init_mutex(t_table *table)
 		ft_exiting(0, table);
 	if (pthread_mutex_init(&table->end_simulation_mutex, NULL))
 		ft_exiting(0, table);
+	if (pthread_mutex_init(&table->eater_mutex, NULL))
+		ft_exiting(0, table);
 	i = 0;
 	while (i < table->numb_philo)
 	{
@@ -78,6 +80,7 @@ void	ft_init_philo(t_table *table)
 		table->philo[i].i_ate = 0;
 		table->philo[i].last_meal_time = 0;
 		table->philo[i].has_eaten_max = 0;
+		table->philo[i].max_eat = table->max_meal;
 		table->philo[i].left_fork = &table->fork[i];
 		table->fork[i].id = 0;
 		table->philo[i].right_fork = &table->fork[(i + 1) % table->numb_philo];

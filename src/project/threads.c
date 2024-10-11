@@ -12,10 +12,23 @@
 
 #include "../../include/philosopher.h"
 
+static void	ft_simulation_call(t_philo *philo)
+{
+	long long	time;
+
+	while (!ft_simulation_is_ended(philo->table))
+	{
+		ft_eat(philo);
+		ft_sleep(philo);
+		time = set_time() - philo->table->start_simulation;
+		ft_mutex_print(philo, THINK, time);
+		usleep(50);
+	}
+}
+
 void	*ft_philo_road(void *data)
 {
 	t_philo		*philo;
-	long long	time;
 
 	philo = (t_philo *)data;
 	philo->last_meal_time = set_time();
@@ -31,14 +44,7 @@ void	*ft_philo_road(void *data)
 			philo->table->start_simulation);
 		ft_usleep(philo->table->time_to_eat * 0.5f);
 	}
-	while (!ft_simulation_is_ended(philo->table))
-	{
-		ft_eat(philo);
-		ft_sleep(philo);
-		time = set_time() - philo->table->start_simulation;
-		ft_mutex_print(philo, THINK, time);
-		usleep(50);
-	}
+	ft_simulation_call(philo);
 	return (data);
 }
 

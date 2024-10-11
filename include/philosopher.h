@@ -44,7 +44,8 @@ typedef struct s_philosopher
 	pthread_t				thread;
 	int						id;
 	int						i_ate;
-	int						has_eaten_max;
+	int						max_eat;
+	bool					has_eaten_max;
 	long long				last_meal_time;
 	t_fork					*left_fork;
 	t_fork					*right_fork;
@@ -66,6 +67,7 @@ typedef struct s_table
 	pthread_mutex_t			start_mutex;
 	pthread_mutex_t			time_mutex;
 	pthread_mutex_t			table_mutex;
+	pthread_mutex_t			eater_mutex;
 	t_fork					fork[200];
 	t_philo					philo[200];
 }	t_table;
