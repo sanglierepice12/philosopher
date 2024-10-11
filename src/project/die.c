@@ -45,8 +45,10 @@ void	ft_die(t_philo *philo)
 	struct timeval	tv_actual;
 
 	gettimeofday(&tv_actual, NULL);
+	pthread_mutex_lock(&philo->table->time_mutex);
 	if (ft_compare_time_val(tv_actual, philo->death_time))
 	{
+		pthread_mutex_unlock(&philo->table->time_mutex);
 		if (ft_simulation_is_ended(philo->table))
 			return ;
 		actual_time = set_time() - philo->table->start_simulation;
@@ -55,4 +57,7 @@ void	ft_die(t_philo *philo)
 		ft_mutex_print(philo, DEAD, actual_time);
 		pthread_mutex_unlock(&philo->table->table_mutex);
 	}
+	else
+		pthread_mutex_unlock(&philo->table->time_mutex);
+
 }

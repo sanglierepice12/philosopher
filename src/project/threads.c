@@ -19,8 +19,10 @@ void	*ft_philo_road(void *data)
 
 	philo = (t_philo *)data;
 	philo->last_meal_time = set_time();
+	pthread_mutex_lock(&philo->table->time_mutex);
 	gettimeofday(&philo->death_time, NULL);
 	ft_add_ms_time_val(&philo->death_time, philo->table->time_to_die);
+	pthread_mutex_unlock(&philo->table->time_mutex);
 	pthread_mutex_lock(&philo->table->start_mutex);
 	pthread_mutex_unlock(&philo->table->start_mutex);
 	if (philo->id % 2 == 0 && philo->table->numb_philo != 1)
